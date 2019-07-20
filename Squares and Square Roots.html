@@ -1,0 +1,206 @@
+<html>
+
+<head>
+    <script src="all.js"></script>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="motif.png">
+<link rel="stylesheet" href="all.css">
+  <meta name="viewport" content="user-scalable=0,initial-scale=0.8,width=device-width">
+    <title>Squares and Square Roots</title>
+</head>
+
+<style>
+    label {
+        font-size: 18px;
+        text-shadow: gray 1px 1px 1px
+    }
+    
+     ::placeholder {
+        color: lightgray;
+        text-shadow: none
+    }
+    
+    .var {
+        color: maroon;
+        text-shadow: 1px 1px 1px
+    }
+    input {
+          font-family: cambria math;
+          font-size: 20px;
+          font-style: italic;
+          text-indent:all;
+          border-radius: 3px;
+          outline: none;
+          padding: 5px;
+          width: 90%;
+          height:30px;
+          border: 1px solid black;
+          cursor: hand;
+          text-shadow: gray 1px 1px 1px;
+          transition: 0.5s
+      }
+      input:focus {
+          box-shadow:inset 0px 0px 3px 2px lightgray;
+      }
+    
+    select {
+        font-size: 18px;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid lightgray;
+        font-style: italic
+    }
+    
+    select:hover {
+        width: 40px;
+        height: 35px
+    }
+    
+    body {
+        padding-top: 15px;
+        background-image: url('back.png');
+        margin:20px;
+        background-size:10% 10%;
+        font-family: tahoma;
+    }
+    
+    .highlight {
+        cursor: hand;
+        width: 100%;
+        transition: 1s;
+        box-sizing: border-box;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    
+    table {
+        width: 80vw;
+    }
+    
+    .highlight:hover {
+        background-color: powderblue;
+        color: black;
+    }
+    
+    #solution {
+        padding:20px;
+        background-color: black;
+        width: 100%;
+        height: 400px;
+        position: relative;
+        top: 20px;
+        white-space:pre-wrap;
+        color: white;
+        overflow-y: auto;
+        text-align: left;
+        border-radius: 10px;
+        padding-bottom: 20px;
+        padding-top: 25px;
+        box-sizing: border-box;
+        font-size: 22px;
+        overflow-x: hidden;
+        font-family: cambria math
+    }
+    .alignment{
+    	width:200px;
+    }
+    
+    .solve {
+          position: relative;
+          top: 10px;
+          cursor: hand;
+          background-color: cornflowerblue;
+          border: 0px;
+          font-size: 16px;
+          border-radius: 4px;
+          padding: 3px;
+          color: white;
+          text-shadow: gray 1px 1px 1px;
+          transition: 0.5s;
+          border: 2px solid cornflowerblue;
+      }
+        .solve:hover {
+          opacity: 0;
+          opacity: 1;
+          background-color: powderblue;
+          color: black;
+          border: 2px solid black;
+      }
+      .panel {
+           float:left;
+           width:50%;
+           padding-top:20px;
+        }
+        input {
+           width:90%;
+        }
+        @media (max-width:1000px) {
+          .panel {
+            width:50%;
+          }
+        }
+        @media (max-width:750px) {
+          .panel {
+            width:100%;
+          }
+          input {
+            width:100%;
+          }
+        }
+         @media(max-width:800px) {
+        #solution {
+        font-size:14px;
+    }
+</style>
+<script>
+  
+    function _(elem) {
+        return document.getElementById(elem);
+    }
+
+    function solves() {
+        if (_("s").value != '') {
+            _("solution").innerHTML += 'The Square of ' + _("s").value + ' is ' + Math.pow(parseFloat(_("s").value),2) + '<br/><br/>';
+            return;
+        }
+    }
+    function solvesr() {
+        if (_("sr").value != '') {
+            _("solution").innerHTML += 'The Square Root of ' + _("sr").value + ' is ' + Math.sqrt(parseFloat(_("sr").value)) + '<br/><br/>';
+            return;
+        }
+    }
+</script>
+
+<body>
+    <div class="panel">
+        <b>Enter Value to Square:</b>
+        <br/>
+        <br/>
+        <input type="number" id="s" placeholder="H">
+        <br/>
+        <button class="solve" onclick="solves()">Solve</button>
+    </div>
+    <br/>
+    <br/>
+    <div class="panel">
+        <b>Enter value to Square Root:</b>
+        <br/>
+        <br/>
+        <input type="number" id="sr" placeholder="O">
+        <br/>
+        <button class="solve" onclick="solvesr()">Solve</button>
+        <br/>
+    </div>
+    <br/>
+    <br/>
+    
+    <br/>
+    <br/>
+        <div id="solution"></div>
+        <br/>
+        <br/>
+</body>
+</html>

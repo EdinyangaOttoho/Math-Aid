@@ -1,0 +1,203 @@
+<html>
+<head>
+	<script src="all.js"></script>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="motif.png">
+    <link rel="stylesheet" href="all.css">
+	<meta name="viewport" content="user-scalable=0,initial-scale=0.8,width=device-width">
+	<title>Number Bases</title>
+	<style>
+		body {
+            font-family:candara;
+            background-image: url('back.png');
+            background-size:10% 10%;
+		}
+		.other {
+			border-radius:50%;
+	        background-color: cornflowerblue;
+	        border: 0px;
+	        width:40px;
+	        height:40px;
+	        font-size: 16px;
+	        color:white;
+		}
+		select {
+	        font-family: cambria math;
+	        font-size: 20px;
+	        font-style: italic;
+	        text-indent:all;
+	        border-radius: 3px;
+	        outline: none;
+	        padding: 5px;
+	        width: 100px;
+	        height:40px;
+	        border: 1px solid lightgray;
+	        cursor: hand;
+	        text-shadow: gray 1px 1px 1px;
+	        transition: 0.5s	
+	    }
+	    #solution {
+	    	font-size:18px;
+	    }
+		input {
+	        font-family: cambria math;
+	        font-size: 20px;
+	        font-style: italic;
+	        text-indent:all;
+	        border-radius: 3px;
+	        border:1px solid black;
+	        outline: none;
+	        padding: 5px;
+	        width: 400px;
+	        height:30px;
+	        cursor: hand;
+	        text-shadow: gray 1px 1px 1px;
+	        transition: 0.5s
+	    }
+	    input:focus {
+	        box-shadow:inset 0px 0px 3px 2px lightgray;
+	    }
+		a {
+			color:white;
+			cursor:hand;
+		}
+		.solve {
+	        position: relative;
+	        top: 10px;
+	        cursor: hand;
+	        background-color: cornflowerblue;
+	        border: 0px;
+	        font-size: 16px;
+	        border-radius: 4px;
+	        padding: 3px;
+	        color: white;
+	        text-shadow: gray 1px 1px 1px;
+	        transition: 0.5s;
+	        border: 2px solid cornflowerblue;
+	    }
+        .solve:hover {
+	        opacity: 0;
+	        opacity: 1;
+	        background-color: powderblue;
+	        color: black;
+	        border: 2px solid black;
+	    }
+	    @media(max-width:800px) {
+        #solution {
+        font-size:14px;
+    }
+	</style>
+	<script>
+		function _(elem) {
+			return document.getElementById(elem);
+		}
+		function solve() {
+			var l = document.getElementById("number").value;
+			var n = document.getElementById("number").value.split('');
+			var b = parseInt(document.getElementById("base").value);
+			_("solution").innerHTML = '';
+			if (b != 16) {
+                var str = '';
+                var str1 = '';
+                var str2 = '';
+                var str3 = '';
+				for (var x=0;x<n.length;x++) {
+	                str += ' + (' + parseInt(n[x]) + ' &times; ' + b + ')<sup>'+ parseInt(n.length-1 - x) + '</sup>';
+	                str1 += ' + (' + parseInt(n[x]) * b + ')<sup>'+ parseInt(n.length-1 - x) + '</sup>';
+	                str2 += ' + ' + Math.pow((parseInt(n[x]) * b),(parseInt(n.length-1 - x)));
+				}
+				str = str.replace(/^\s\+\s/,'');
+				str1 = str1.replace(/^\s\+\s/,'');
+				str2 = str2.replace(/^\s\+\s/,'');
+				st = str2.replace(' ','');
+				str3 = eval(st);
+	            _("solution").innerHTML += l + '<sub>'+b+'</sub> = ' + str + '<br/><br/>';
+	            _("solution").innerHTML += '           = ' + str1 + '<br/><br/>';
+	            _("solution").innerHTML += '           = ' + str2 + '<br/><br/>';
+	            _("solution").innerHTML += '           = ' + str3+'<sub>10</sub><br/><br/>';
+	            _("solution").innerHTML += '    Therefore, ' + l + '<sub>'+b+'</sub> = ' + str3 +'<sub>10</sub>';
+			}
+			else {
+			    var str = '';
+                var str1 = '';
+                var str2 = '';
+                var str3 = '';
+				for (var x=0;x<n.length;x++) {
+					var stt = 0;
+					if (n[x] == 'A'){
+                       stt = 10;
+					}
+					else if (n[x] == 'B'){
+                       stt = 11;
+					}
+					else if (n[x] == 'C'){
+                       stt = 12;
+					}
+					else if (n[x] == 'D'){
+                       stt = 13;
+					}
+					else if (n[x] == 'E'){
+					   stt = 14;
+					}
+					else if (n[x] == 'F'){
+					   stt = 15;
+					}
+					else {
+						stt = n[x];
+					}
+	                str += ' + (' + parseInt(stt) + ' &times; ' + b + ')<sup>'+ parseInt(n.length-1 - x) + '</sup>';
+	                str1 += ' + (' + parseInt(stt) * b + ')<sup>'+ parseInt(n.length-1 - x) + '</sup>';
+	                str2 += ' + ' + Math.pow((parseInt(stt) * b),(parseInt(n.length-1 - x)));
+				}
+				str = str.replace(/^\s\+\s/,'');
+				str1 = str1.replace(/^\s\+\s/,'');
+				str2 = str2.replace(/^\s\+\s/,'');
+				st = str2.replace(' ','');
+				str3 = eval(st);
+	            _("solution").innerHTML += l + '<sub>'+b+'</sub> = ' + str + '<br/><br/>';
+	            _("solution").innerHTML += '           = ' + str1 + '<br/><br/>';
+	            _("solution").innerHTML += '           = ' + str2 + '<br/><br/>';
+	            _("solution").innerHTML += '           = ' + str3+'<sub>10</sub><br/><br/>';
+	            _("solution").innerHTML += '    Therefore, ' + l + '<sub>'+b+'</sub> = ' + str3 +'<sub>10</sub>';
+			}
+		}
+	</script>
+</head>
+<body>
+<br/>
+<a href="Number Bases.html"><button class="other"><i class="fas fa-share"></i></button></a>
+<br/>
+<br/>
+<b>Convert</b>
+<br/>
+<br/>
+<input type="number" id="number">
+<br/>
+<br/>
+<b>in Base:</b>
+<br/>
+<br/>
+<select id="base">
+	<option>2</option>
+	<option>3</option>
+	<option>4</option>
+	<option>5</option>
+	<option>6</option>
+	<option>7</option>
+	<option>8</option>
+	<option>9</option>
+	<option>16</option>
+</select>
+<br/>
+<br/>
+<b>To Base 10.</b>
+<br/>
+<br/>
+<button 
+onclick="solve()" class="solve">Solve</button>
+<br/>
+<br/>
+<br/>
+<div style="font-size:20px;overflow:auto;height:65vh;width:100%;background-color:black;color:white;padding:10px;padding-top:30px;box-sizing:border-box;white-space:pre-wrap" id="solution"></div>
+</body>
+</html>

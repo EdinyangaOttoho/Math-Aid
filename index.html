@@ -1,0 +1,868 @@
+<html>
+<head>
+	<link rel="shortcut icon" href="motif.png">
+	<meta charset="UTF-8">
+	<script src="all.js"></script>
+	<link rel="stylesheet" href="all.css">
+	<meta name="viewport" content="user-scalable=0,initial-scale=1.0">
+	<style>
+	    button {
+	    	outline:none;
+	    }
+	    body {
+	    	margin:20px;
+	    	background-color:gray;
+	    }
+	    .slider {
+	    	position:fixed;
+	    	height:80vh;
+	    	top:10vh;
+	    	width:680vw;
+	    	overflow-y:hidden;
+	    	overflow-x:auto;
+	    	left:0px;
+	    	z-index:1;
+	    	padding-left:4.5vw;
+	    	padding-right:4.5vw;
+	    	padding-top:5px;
+	    	padding-bottom:2px;
+	    	transition:1s;
+	    }
+	    .right-arrow {
+            position:fixed;
+            width:50px;
+            height:100vh;
+            top:0px;
+            right:10px;
+            z-index:2;
+	    }
+	    .arrow {
+	    	border:0px;
+	    	outline:none;
+	    	cursor:hand;
+	    	width:50px;
+	    	height:50px;
+	    	border-radius:50%;
+	    	background-color:black;
+	    	color:white;
+	    	transition:0.5s;
+	    }
+	    .arrow:hover {
+            background-color:#2a2b2d;
+	    }
+	    .popper {
+	    	position:fixed;
+	    	z-index:3;
+	    	background-color:maroon;
+	    	border:0px;
+	    	color:white;
+	    	border-radius:50%;
+	    	transition:0.5s;
+	    	width:70px;
+	    	height:70px;
+	    	top:10px;
+	    	right:10px;
+	    	cursor:hand;
+	    }
+	    .popper:hover {
+            background-color:red;
+	    }
+	    .panel {
+	    	width:45vw;
+	    	height:100%;
+	    	box-sizing:border-box;
+	    	display:inline-flex;
+	    	padding-left:5vw;
+	    	padding-right:5vw;
+	    	cursor:hand;
+	    }
+	    .blue {
+	    	color:cornflowerblue;
+	    }
+	    .content {
+	    	background-color:white;
+	    	position:relative;
+	    	top:5%;
+	    	width:100%;
+	    	border-radius:10px;
+	    	height:80%;
+	    	box-sizing:border-box;
+	    	box-shadow:0px 0px 3px 2px lightgray;
+	    	transition:0.5s;
+	    	cursor:hand;
+	    }
+	    #loader {
+	        background-image:linear-gradient(40deg,powderblue,lightblue);
+	        transition:0.5s;
+	        position:fixed;
+	        top:0px;
+	        z-index:4;
+	        left:0px;
+	    }
+	    .box {
+	    	display:inline-flex;
+	    	margin:12px;
+	    	width:25px;
+	    	height:25px;
+	    	border-radius:50%;
+	    }
+	    .round {
+	    	width:20px;
+	    	height:20px;
+	    	display:inline-flex;
+	    	border-radius:50%;
+	    	background-color:#f2f2f2;
+	    	transition:0.5s;
+	    	cursor:hand;
+	    }
+	    #r1 {
+	    	background-color:red;
+	    }
+	    #s1 {
+	        background-color:red;
+	    }
+	    #box1 {
+            background-color:gold;
+            animation:rise 0.5s infinite ease-in-out;
+            position:relative;
+            animation-direction:alternate;
+	    }
+	    #box2 {
+            background-color:red;
+            animation:rise 0.5s infinite ease-in-out;
+            position:relative;
+            animation-direction:alternate;
+            animation-delay:0.12s;
+	    }
+	    #box3 {
+            background-color:green;
+            animation:rise 0.5s infinite ease-in-out;
+            animation-delay:0.24s;
+            animation-direction:alternate;
+            position:relative;
+	    }
+	    .load {
+	    	display:inline-flex;
+	    	margin:10px;
+	    	width:20px;
+	    	height:20px;
+	    	transition:0.5s;
+	    	background-color:lightgray;
+	    }
+	    .content:hover {
+            transform:scale(1.08,1.08);
+            background-color:#f2f2f2;
+            position:relative;
+            box-shadow:0px 0px 6px 4px lightgray;
+	    }
+	    .content:hover .l1{
+            animation:high 0.5s infinite ease-in-out;
+            animation-direction:alternate;
+	    }
+	    .content:hover .l2{
+            animation:high 0.5s infinite ease-in-out;
+            animation-delay:0.5s;
+            animation-direction:alternate;
+	    }
+	    .content:hover .l3{
+            animation:high 0.5s infinite;
+            animation-delay:1s;
+            animation-direction:alternate;
+	    }
+	    a {
+	    	width:100%;
+	    	text-decoration:none;
+	    }
+	    .title {
+	    	font-weight:bold;
+	    	font-family:comic sans MS;
+	    	font-size:30px;
+	    }
+	    h1 {
+	    	font-family:elephant;
+	    	font-style:italic;
+	    	text-shadow:gray 1px 2px;
+	    	position:relative;
+	    	top:-20px;
+	    	font-size:35px;
+	    }
+	    .status1 {
+            position:fixed;
+            width:100vw;
+            height:50px;
+            bottom:20px;
+            z-index:2;
+            left:0px;
+	    }
+	    .status2 {
+	        position:fixed;
+            width:100vw;
+            height:50px;
+            bottom:20px;
+            z-index:2;
+            display:none;
+            left:0px;
+	    }
+	    @keyframes highlight {
+	    	from {
+	    	    background-color:#f2f2f2;
+	    	}
+	    	to {
+	    	    background-color:red;
+	    	}
+	    }
+	    @keyframes rise {
+	    	from {
+                top:0px;
+                opacity:1;
+	    	}
+	    	to {
+                top:-80px;
+                filter:blur(1px);
+                transform:scale(1.9,1.9);
+                opacity:0.8;
+	    	}
+	    }
+	    @keyframes high {
+            from {
+            	background-color:lightgray;
+            }
+            to {
+            	background-color:red;
+            }
+	    }
+	    @media (max-width:700px) {
+	    	.slider {
+                width:1080vw;
+                padding-left:2.5vw;
+	    	    padding-right:2.5vw;
+	    	}
+	    	.panel {
+                width:95vw;
+	    	}
+	    	.status1,.status2{
+                height:20px;
+                bottom:8px;
+	    	}
+	    	.status1 {
+	    		display:none;
+	    	}
+	    	.status2 {
+	    		display:block;
+	    	}
+	    }
+    </style>
+	<title>Math Aid</title>
+</head>
+<body onload="f()" onresize="r()">
+<div style="width:100%;height:100%" id="loader">
+	<table style="width:100%;height:100%">
+		<tr>
+			<td>
+				<center><div id="box1" class="box"></div><div id="box2" class="box"></div><div id="box3" class="box"></div></center>
+		    <h1><center>Math Aid</center></h1>
+		    </td>
+		</tr>
+	</table>
+</div>
+<div class="slider">
+	<div class="d1 panel">
+		<a href="Differentiation.html">
+        <div class="content">
+        	<table style="width:100%;height:100%">
+        		<tr>
+        			<td class="title">
+        				<center><i class="fas fa-calculator blue fa-2x"></i></center>
+        				<center>Differentiation</center>
+        				<center><div class="l1 load"></div><div class="l2 load"></div><div class="l3 load"></div></center>
+        			</td>
+        		</tr>
+        	</table>
+        </div>
+        </a>
+	</div>
+	<div class="d2 panel">
+		<a href="Integration.html">
+		<div class="content">
+			<table style="width:100%;height:100%">
+        		<tr>
+        			<td class="title">
+        				<center><i class="fas fa-calculator blue fa-2x"></i></center>
+        				<center>Integration</center>
+        				<center><div class="l1 load"></div><div class="l2 load"></div><div class="l3 load"></div></center>
+        			</td>
+        		</tr>
+        	</table>
+		</div>
+	    </a>
+	</div>
+	<div class="d3 panel">
+		<a href="Number Bases.html">
+		<div class="content">
+			<table style="width:100%;height:100%">
+        		<tr>
+        			<td class="title">
+        				<center><i class="fas fa-calculator blue fa-2x"></i></center>
+        				<center>Number Bases</center>
+        				<center><div class="l1 load"></div><div class="l2 load"></div><div class="l3 load"></div></center>
+        			</td>
+        		</tr>
+        	</table>
+		</div>
+		</a>
+	</div>
+	<div class="d4 panel">
+		<a href="Pythagoras Theorem.html">
+		<div class="content">
+			<table style="width:100%;height:100%">
+        		<tr>
+        			<td class="title">
+        				<center><i class="fas fa-calculator blue fa-2x"></i></center>
+        				<center>Pythagora's Theorem</center>
+        				<center><div class="l1 load"></div><div class="l2 load"></div><div class="l3 load"></div></center>
+        			</td>
+        		</tr>
+        	</table>
+		</div>
+	    </a>
+	</div>
+	<div class="d5 panel">
+		<a href="Quadratic Equation Solver.html">
+        <div class="content">
+        	<table style="width:100%;height:100%">
+        		<tr>
+        			<td class="title">
+        				<center><i class="fas fa-calculator blue fa-2x"></i></center>
+        				<center>Quadratic Equations</center>
+        				<center><div class="l1 load"></div><div class="l2 load"></div><div class="l3 load"></div></center>
+        			</td>
+        		</tr>
+        	</table>
+        </div>
+        </a>
+	</div>
+	<div class="d6 panel">
+		<a href="Simultaneous Equation Solver.html">
+		<div class="content">
+			<table style="width:100%;height:100%">
+        		<tr>
+        			<td class="title">
+        				<center><i class="fas fa-calculator blue fa-2x"></i></center>
+        				<center>Simultaneous Equations</center>
+        				<center><div class="l1 load"></div><div class="l2 load"></div><div class="l3 load"></div></center>
+        			</td>
+        		</tr>
+        	</table>
+		</div>
+	    </a>
+	</div>
+	<div class="d7 panel">
+		<a href="Sine and Cosine Rule.html">
+		<div class="content">
+			<table style="width:100%;height:100%">
+        		<tr>
+        			<td class="title">
+        				<center><i class="fas fa-calculator blue fa-2x"></i></center>
+        				<center>Sine and Cosine Rule</center>
+        				<center><div class="l1 load"></div><div class="l2 load"></div><div class="l3 load"></div></center>
+        			</td>
+        		</tr>
+        	</table>
+		</div>
+	    </a>
+	</div>
+	<div class="d8 panel">
+		<a href="Standard Deviation and Variance.html">
+		<div class="content">
+			<table style="width:100%;height:100%">
+        		<tr>
+        			<td class="title">
+        				<center><i class="fas fa-calculator blue fa-2x"></i></center>
+        				<center>Standard Deviation/Variance</center>
+        				<center><div class="l1 load"></div><div class="l2 load"></div><div class="l3 load"></div></center>
+        			</td>
+        		</tr>
+        	</table>
+		</div>
+	    </a>
+	</div>
+	<div class="d9 panel">
+		<a href="Mensuration.html">
+		<div class="content">
+			<table style="width:100%;height:100%">
+        		<tr>
+        			<td class="title">
+        				<center><i class="fas fa-calculator blue fa-2x"></i></center>
+        				<center>Mensuration</center>
+        				<center><div class="l1 load"></div><div class="l2 load"></div><div class="l3 load"></div></center>
+        			</td>
+        		</tr>
+        	</table>
+		</div>
+	    </a>
+	</div>
+	<div class="d10 panel">
+		<a href="Squares and Square Roots.html">
+		<div class="content">
+			<table style="width:100%;height:100%">
+        		<tr>
+        			<td class="title">
+        				<center><i class="fas fa-calculator blue fa-2x"></i></center>
+        				<center>Squares and Square Roots</center>
+        				<center><div class="l1 load"></div><div class="l2 load"></div><div class="l3 load"></div></center>
+        			</td>
+        		</tr>
+        	</table>
+		</div>
+	    </a>
+	</div>
+</div>
+<script>
+	var s = 0;
+	var t = 0;
+	var t1 = 1;
+	var t2 = 1;
+	var screenwidth = 0;
+	var m = 0;
+	var over = 0;
+	function r() {
+		window.location.replace("index.html");
+		var u = 0;
+		if (screenwidth >= 800) {
+		    t = (document.querySelectorAll(".d1")[0].getBoundingClientRect().width + 4)*2;
+		    u = (screenwidth - t);
+		    m = t;
+		}
+		else {
+		    t = document.querySelectorAll(".d1")[0].getBoundingClientRect().width + 4;
+		    u = (screenwidth - t)/2;
+		    m = t;
+		}
+	}
+	function f() {
+		screenwidth = document.body.getBoundingClientRect().width;
+		if (screenwidth >= 800) {
+		    t = (document.querySelectorAll(".d1")[0].getBoundingClientRect().width + 4)*2;
+		    u = (screenwidth - t);
+		    m = t;
+		}
+		else {
+		    t = document.querySelectorAll(".d1")[0].getBoundingClientRect().width + 4;
+		    u = (screenwidth - t)/2;
+		    m = t;
+		}
+		setTimeout(function(){
+        	document.getElementById("loader").style.opacity = '0';
+        	setTimeout(function() {
+                document.getElementById("loader").parentNode.removeChild(document.getElementById("loader"));
+        	},500);
+        	inter = setInterval(function(){
+        		if (s <= 10) {
+        		    screenwidth = document.body.getBoundingClientRect().width;
+					if (screenwidth >= 800) {
+						t1++;
+						if (t1 == 1){
+                            document.getElementById("r1").style.backgroundColor = 'red';
+                            document.getElementById("r2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r5").style.backgroundColor = '#f2f2f2';
+						}
+						if (t1 == 2){
+						    document.getElementById("r1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r2").style.backgroundColor = 'red';
+                            document.getElementById("r3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r5").style.backgroundColor = '#f2f2f2';	
+						}
+						if (t1 == 3){
+							document.getElementById("r1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r3").style.backgroundColor = 'red';
+                            document.getElementById("r4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r5").style.backgroundColor = '#f2f2f2';
+						}
+						if (t1 == 4){
+							document.getElementById("r1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r4").style.backgroundColor = 'red';
+                            document.getElementById("r5").style.backgroundColor = '#f2f2f2';
+						}
+						if (t1 == 5){
+							document.getElementById("r1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r5").style.backgroundColor = 'red';
+						}
+					    t = (document.querySelectorAll(".d1")[0].getBoundingClientRect().width + 4)*2;
+					    u = (screenwidth - t);
+					    over = document.querySelectorAll(".d1")[0].getBoundingClientRect().width*6 + m;
+					    s = s + 3;
+					}
+					else {
+						t2++;
+						if (t2 == 1){
+							document.getElementById("s1").style.backgroundColor = 'red';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 2){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = 'red';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 3){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = 'red';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 4){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = 'red';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 5){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = 'red';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 6){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = 'red';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 7){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = 'red';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 8){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = 'red';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 9){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = 'red';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 10){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = 'red';
+						}
+					    t = document.querySelectorAll(".d1")[0].getBoundingClientRect().width + 4;
+					    u = (screenwidth - t)/2;
+					    s = s + 1.2;
+					}
+	                document.querySelectorAll(".slider")[0].style.transform = 'translateX(-'+m+'px)';
+	                m = m + t;	
+        		}
+        		else {
+                    document.querySelectorAll(".slider")[0].style.transform = 'translateX(0px)';
+                    m = t;
+                    s = 0;
+                    document.getElementById("r5").style.backgroundColor = '#f2f2f2';
+                    document.getElementById("r1").style.backgroundColor = 'red';
+                    document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+                    document.getElementById("s1").style.backgroundColor = 'red';
+                    t1 = 1;
+                    t2 = 1;
+        		}
+        	},4000);
+    	},3000);
+	}
+</script>
+<a href="calculator.html">
+	<button class="popper"><i class="fas fa-calculator fa-2x"></i></button>
+</a>
+<div class="status1">
+	<center>
+		<div class="round" id="r1"></div>
+		<div class="round" id="r2"></div>
+		<div class="round" id="r3"></div>
+		<div class="round" id="r4"></div>
+		<div class="round" id="r5"></div>
+    </center>
+</div>
+<div class="status2">
+	<center>
+		<div class="round" id="s1"></div>
+		<div class="round" id="s2"></div>
+		<div class="round" id="s3"></div>
+		<div class="round" id="s4"></div>
+		<div class="round" id="s5"></div>
+		<div class="round" id="s6"></div>
+		<div class="round" id="s7"></div>
+		<div class="round" id="s8"></div>
+		<div class="round" id="s9"></div>
+		<div class="round" id="s10"></div>
+    </center>
+</div>
+<table class="right-arrow">
+	<tr>
+		<td><button class="arrow" onclick="rgt()"><i class="fas fa-arrow-right fa-2x"></i></button></td>
+	</tr>
+</table>
+</body>
+		<script>
+		    function rgt() {
+		    	clearInterval(inter);
+                if (s <= 10) {
+        		    screenwidth = document.body.getBoundingClientRect().width;
+					if (screenwidth >= 800) {
+						t1++;
+						if (t1 == 1){
+                            document.getElementById("r1").style.backgroundColor = 'red';
+                            document.getElementById("r2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r5").style.backgroundColor = '#f2f2f2';
+						}
+						if (t1 == 2){
+						    document.getElementById("r1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r2").style.backgroundColor = 'red';
+                            document.getElementById("r3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r5").style.backgroundColor = '#f2f2f2';	
+						}
+						if (t1 == 3){
+							document.getElementById("r1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r3").style.backgroundColor = 'red';
+                            document.getElementById("r4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r5").style.backgroundColor = '#f2f2f2';
+						}
+						if (t1 == 4){
+							document.getElementById("r1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r4").style.backgroundColor = 'red';
+                            document.getElementById("r5").style.backgroundColor = '#f2f2f2';
+						}
+						if (t1 == 5){
+							document.getElementById("r1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("r5").style.backgroundColor = 'red';
+						}
+					    t = (document.querySelectorAll(".d1")[0].getBoundingClientRect().width + 4)*2;
+					    u = (screenwidth - t);
+					    s = s + 3;
+					}
+					else {
+						t2++;
+						if (t2 == 1){
+							document.getElementById("s1").style.backgroundColor = 'red';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 2){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = 'red';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 3){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = 'red';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 4){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = 'red';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 5){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = 'red';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 6){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = 'red';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 7){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = 'red';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 8){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = 'red';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 9){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = 'red';
+                            document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+						}
+						if (t2 == 10){
+							document.getElementById("s1").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s2").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s3").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s4").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s5").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s6").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s7").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s8").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s9").style.backgroundColor = '#f2f2f2';
+                            document.getElementById("s10").style.backgroundColor = 'red';
+						}
+					    t = document.querySelectorAll(".d1")[0].getBoundingClientRect().width + 4;
+					    u = (screenwidth - t)/2;
+					    s = s + 1.2;
+					}
+	                document.querySelectorAll(".slider")[0].style.transform = 'translateX(-'+m+'px)';
+	                m = m + t;	
+        		}
+        		else {
+                    document.querySelectorAll(".slider")[0].style.transform = 'translateX(0px)';
+                    m = t;
+                    s = 0;
+                    document.getElementById("r5").style.backgroundColor = '#f2f2f2';
+                    document.getElementById("r1").style.backgroundColor = 'red';
+                    document.getElementById("s10").style.backgroundColor = '#f2f2f2';
+                    document.getElementById("s1").style.backgroundColor = 'red';
+                    t1 = 1;
+                    t2 = 1;
+        		}
+		    }
+        </script>
+</html>

@@ -1,0 +1,431 @@
+<html>
+
+<head>
+    <script src="all.js"></script>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="motif.png">
+<link rel="stylesheet" href="all.css">
+    <meta name="viewport" content="user-scalable=0,initial-scale=0.8,width=device-width">
+    <title>Simultaneous Equations</title>
+</head>
+
+<style>
+    button {
+    	outline:none;
+    }
+    label {
+        font-size: 16px;
+        text-shadow: gray 1px 1px 1px
+    }
+    
+     ::placeholder {
+        color: gray;
+        text-shadow: none;
+        font-size:16px;
+    }
+    
+    input {
+        font-family: cambria math;
+        font-size: 20px;
+        font-style: italic;
+        text-indent:all;
+        border-radius: 3px;
+        outline: none;
+        padding: 5px;
+        width: 100px;
+        height:35px;
+        border: 1px solid black;
+        cursor: hand;
+        text-shadow: gray 1px 1px 1px;
+        transition: 0.5s
+    }
+    
+    .var {
+        color: maroon;
+        text-shadow: 1px 1px 1px
+    }
+    
+    input:focus {
+        box-shadow:inset 0px 0px 3px 2px lightgray;
+    }
+    select {
+        font-size: 18px;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid lightgray;
+        font-style: italic
+    }
+    
+    select:hover {
+        width: 40px;
+        height: 35px
+    }
+    
+    body {
+        padding-top: 30px;
+        background-image: url('back.png');
+        background-size:10% 10%;
+        font-family: tahoma;
+    }
+    
+    .highlight {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    
+    table {
+        width: 80vw;
+        text-align: center;
+    }
+    #solution {
+        background-color: black;
+        width: 95%;
+        height: 450px;
+        position: relative;
+        top: 20px;
+        color: white;
+        overflow-y: auto;
+        text-align: left;
+        border-radius: 5px;
+        white-space:pre-wrap;
+        padding-bottom: 25px;
+        padding-top: 15px;
+        box-sizing: border-box;
+        font-size: 20px;
+        overflow-x: hidden;
+        font-family: cambria math
+    }
+    
+    .solve {
+        position: relative;
+        top: 10px;
+        cursor: hand;
+        background-color: cornflowerblue;
+        border: 0px;
+        font-size: 16px;
+        border-radius: 4px;
+        padding: 3px;
+        color: white;
+        text-shadow: gray 1px 1px 1px;
+        transition: 0.5s;
+        border: 2px solid cornflowerblue;
+    }
+    
+    .solve:hover {
+        opacity: 0;
+        opacity: 1;
+        background-color: powderblue;
+        color: black;
+        border: 2px solid black;
+    }
+     @media(max-width:800px) {
+        #solution {
+        font-size:14px;
+    }
+</style>
+<script>
+    function _(elem) {
+        return document.getElementById(elem);
+    }
+
+    function solve() {
+    	var e1 = _("eq1").value;
+    	var e2 = _("eq2").value;
+    	e1 = e1.replace(/\s+/g,'');
+        p1 = e1.match(/^\-/);
+        e1 = e1.replace(/^\-/,'');
+    	e2 = e2.replace(/\s+/g,'');
+        p2 = e2.match(/^\-/);
+        e2 = e2.replace(/^\-/,'');
+        var pp1 = '';
+        var pp2 = '';
+        if (p1 == null) {
+            pp1 = '';
+        }
+        else {
+            pp1 = p1[0];
+        }
+        if (p2 == null) {
+            pp2 = '';
+        }
+        else {
+            pp2 = p1[0];
+        }
+    	if (eq1.value == '' || eq2.value == ''){
+    		alert("Invalid input");
+    		return;
+    	}
+    	
+    	var me1 = e1.split(/\W/g);
+    	var me2 = e2.split(/\W/g);
+    	var e1a = pp1 + me1[0].match(/[0-9]+/)[0];
+    	var e1ax = me1[0].match(/[a-z]/i)[0];
+    	var oop1 = e1.match(/\W/g)[0];
+    	var oop2 = e2.match(/\W/g)[0];
+    	var e1b = me1[1].match(/[0-9]+/)[0];
+    	var e1bx = me1[1].match(/[a-z]/i)[0];
+    	var e1c = me1[2].match(/[0-9]+/)[0];
+    	var e2a = pp2 + me2[0].match(/[0-9]+/)[0];
+    	var e2ax = me2[0].match(/[a-z]/i)[0];
+    	var e2b = me2[1].match(/[0-9]+/)[0];
+    	var e2bx = me2[1].match(/[a-z]/i)[0];
+    	var e2c = me2[2].match(/[0-9]+/)[0];
+    	_("a1").value = e1a;
+    	_("x1").value = e1ax;
+    	_("o1").value = oop1;
+    	_("b1").value = e1b;
+    	_("y1").value = e1bx;
+    	_("c1").value = e1c;
+    	_("a2").value = e2a;
+    	_("x2").value = e2ax;
+    	_("o2").value = oop2;
+    	_("b2").value = e2b;
+    	_("y2").value = e2bx;
+    	_("c2").value = e2c;
+        document.getElementById("solution").innerHTML += "<hr/>";
+        var a1 = _("a1").value;
+        var x1 = _("x1").value;
+        var o1 = _("o1").value;
+        var b1 = _("b1").value;
+        var y1 = _("y1").value;
+        var c1 = _("c1").value;
+        var b1y = o1 + b1;
+        var a2 = _("a2").value;
+        var x2 = _("x2").value;
+        var o2 = _("o2").value;
+        var b2 = _("b2").value;
+        var y2 = _("y2").value;
+        var c2 = _("c2").value;
+        var b2y = o2 + b2;
+        _("solution").innerHTML += '<div class="highlight">   ' + a1 + x1 + '' + ' ' + o1 + ' ' + b1 + y1 + '' + '' + ' = ' + c1 + ' --- (1)</div>';
+        _("solution").innerHTML += '<div class="highlight">   ' + a2 + x2 + '' + ' ' + o2 + ' ' + b2 + y2 + '' + ' = ' + c2 + ' --- (2)</div>';
+        if (a1 == a2) {
+            var fa1 = parseFloat(b1y);
+            var fa2 = parseFloat(b2y);
+            var sub1 = fa1 - fa2;
+            var ca1 = parseFloat(c1);
+            var ca2 = parseFloat(c2);
+            var sub2 = ca1 - ca2;
+            _("solution").innerHTML += '<div class="highlight">Subtract Equation (2) from Equation (1)</div>';
+            _("solution").innerHTML += '<div class="highlight">' + sub1 + y1 + '' + '' + ' = ' + sub2 + '</div>';
+            _("solution").innerHTML += '<div class="highlight">' + y1 + '' + '' + ' = <sup>' + sub2 + '</sup>&frasl;<sub>' + sub1 + '</sub></div>';
+            var div = (sub2 / sub1).toFixed(2);
+            _("solution").innerHTML += '<div class="highlight">' + y1 + '' + '' + ' = ' + div + '</div>';
+            _("solution").innerHTML += '<div class="highlight">Substitute ' + y1 + '' + '' + ' = ' + div + ' into Equation (1)</div>';
+            _("solution").innerHTML += '<div class="highlight">   ' + a1 + x1 + '' + ' ' + o1 + ' ' + b1 + ' (' + div + ')' + ' = ' + c1 + '</div>';
+            var mult = fa1 * div;
+            var stmp = "";
+            stmp = mult + "";
+            if (stmp[0] != '-') {
+                stmp = "+ " + stmp;
+            } else {
+                var tx = parseFloat(stmp) * -1;
+                stmp = "- " + tx;
+            }
+            _("solution").innerHTML += '<div class="highlight">   ' + a1 + x1 + '' + ' ' + stmp + ' = ' + c1 + '</div>';
+            var ot = mult * -1;
+            var smtp = "";
+            smtp = ot + "";
+            if (smtp[0] != '-') {
+                smtp = "+ " + smtp;
+            } else {
+                var tx = parseFloat(smtp) * -1;
+                smtp = "- " + tx;
+            }
+            _("solution").innerHTML += '<div class="highlight">   ' + a1 + x1 + '' + ' = ' + c1 + ' ' + smtp + '</div>';
+            var sub = parseFloat(c1) + ot;
+            _("solution").innerHTML += '<div class="highlight">   ' + a1 + x1 + '' + ' = ' + sub + '</div>';
+            _("solution").innerHTML += '<div class="highlight">' + x1 + '' + ' = <sup>' + sub + '</sup>&frasl;<sub>' + a1 + '</sub></div>';
+            var dix = (sub / parseFloat(a1)).toFixed(2);
+            _("solution").innerHTML += '<div class="highlight">' + x1 + '' + ' = ' + dix + '</div>';
+            _("solution").innerHTML += '<div class="highlight">Therefore, ' + x1 + '' + ' = ' + dix + ' and ' + y1 + '' + '' + ' = ' + div + '</div>';
+        }
+        if (b1y == b2y) {
+            var fa1 = parseFloat(a1);
+            var fa2 = parseFloat(a2);
+            var sub1 = fa1 - fa2;
+            var ca1 = parseFloat(c1);
+            var ca2 = parseFloat(c2);
+            var sub2 = ca1 - ca2;
+            _("solution").innerHTML += '<div class="highlight">Subtract Equation (2) from Equation (1)</div>';
+            _("solution").innerHTML += '<div class="highlight">' + sub1 + x1 + '' + ' = ' + sub2 + '</div>';
+            _("solution").innerHTML += '<div class="highlight">' + x1 + '' + ' = <sup>' + sub2 + '</sup>&frasl;<sub>' + sub1 + '</sub></div>';
+            var div = (sub2 / sub1).toFixed(2);
+            _("solution").innerHTML += '<div class="highlight">' + x1 + '' + ' = ' + div + '</div>';
+            _("solution").innerHTML += '<div class="highlight">Substitute ' + x1 + '' + ' = ' + div + ' into Equation (1)</div>';
+            _("solution").innerHTML += '<div class="highlight">   ' + fa1 + ' (' + div + ') ' + o1 + ' ' + b1 + y1 + '' + '' + ' = ' + c1 + '</div>';
+            var mult = fa1 * div;
+            var stmp = "";
+            stmp = mult + "";
+            if (stmp[0] != '-') {
+                stmp = stmp;
+            } else {
+                var tx = parseFloat(stmp) * -1;
+                stmp = "-" + tx;
+            }
+            _("solution").innerHTML += '<div class="highlight">   ' + stmp + ' ' + o1 + ' ' + b1 + y1 + '' + '' + ' = ' + c1 + '</div>';
+            var ot = mult * -1;
+            var smtp = "";
+            smtp = ot + "";
+            if (smtp[0] != '-') {
+                smtp = "+ " + smtp;
+            } else {
+                var tx = parseFloat(smtp) * -1;
+                smtp = "- " + tx;
+            }
+            _("solution").innerHTML += '<div class="highlight">   ' + b1 + y1 + '' + '' + ' = ' + c1 + ' ' + smtp + '</div>';
+            var sub = parseFloat(c1) + ot;
+            _("solution").innerHTML += '<div class="highlight">   ' + b1 + y1 + '' + '' + ' = ' + sub + '</div>';
+            _("solution").innerHTML += '<div class="highlight">' + y1 + '' + '' + ' = <sup>' + sub + '</sup>&frasl;<sub>' + b1 + '</sub></div>';
+            var dix = (sub / parseFloat(b1)).toFixed(2);
+            _("solution").innerHTML += '<div class="highlight">' + y1 + '' + '' + ' = ' + dix + '</div>';
+            _("solution").innerHTML += '<div class="highlight">Therefore, ' + x1 + '' + ' = ' + div + ' and ' + y1 + '' + '' + ' = ' + dix + '</div>';
+        }
+        if (a1 != a2 && b1y != b2y) {
+            var xx1 = parseFloat(a1).toFixed(2);
+            var xx2 = parseFloat(a2).toFixed(2);
+            var bby1 = parseFloat(b1y).toFixed(2);
+            var bby2 = parseFloat(b2y).toFixed(2);
+            var cc1 = parseFloat(c1).toFixed(2);
+            var cc2 = parseFloat(c2).toFixed(2);
+            _("solution").innerHTML += '<div class="highlight">Multiply Equation (1) by ' + xx2 + ' and Equation (2) by ' + xx1 + '</div>';
+            var ma1 = (xx1 * xx2).toFixed(2);
+            var mb1 = (bby1 * xx2).toFixed(2);
+            var mc1 = (cc1 * xx2).toFixed(2);
+            var ma2 = (xx2 * xx1).toFixed(2);
+            var mb2 = (bby2 * xx1).toFixed(2);
+            var mc2 = (cc2 * xx1).toFixed(2);
+            var di1 = mb1 + "";
+            if (di1[0] == '-') {
+                var ddi1 = mb1 * -1;
+                di1 = ' - ' + ddi1;
+            } else {
+                di1 = ' + ' + mb1;
+            }
+            var di2 = mb2 + "";
+            if (di2[0] == '-') {
+                var ddi2 = mb2 * -1;
+                di2 = ' - ' + ddi2;
+            } else {
+                di2 = ' + ' + mb2;
+            }
+            _("solution").innerHTML += '<div class="highlight">' + ma1 + x1 + '' + di1 + y1 + '' + '' + " = " + mc1 + ' --- (3)</div>';
+            _("solution").innerHTML += '<div class="highlight">' + ma2 + x1 + '' + di2 + y1 + '' + '' + " = " + mc2 + ' --- (4)</div>';
+            a1 = ma1 + "";
+            x1 = x1;
+            o1 = di1[1];
+            var mmb1 = mb1 + "";
+            if (mmb1[0] == '-') {
+                var mul = mb1 * -1;
+                mmb1 = mul + "";
+            }
+            b1 = mmb1;
+            y1 = y1;
+            c1 = mc1 + "";
+            b1y = o1 + b1;
+            a2 = ma2 + "";
+            x2 = x2;
+            o2 = di2[1];
+            var mmb2 = mb2 + "";
+            if (mmb2[0] == '-') {
+                var mul = mb2 * -1;
+                mmb2 = mul + "";
+            }
+            b2 = mmb2;
+            y2 = y2;
+            c2 = mc2 + "";
+            b2y = o2 + b2;
+            var fa1 = parseFloat(b1y);
+            var fa2 = parseFloat(b2y);
+            var sub1 = fa1 - fa2;
+            var ca1 = parseFloat(c1);
+            var ca2 = parseFloat(c2);
+            var sub2 = ca1 - ca2;
+            _("solution").innerHTML += '<div class="highlight">Subtract Equation (4) from Equation (3)</div>';
+            _("solution").innerHTML += '<div class="highlight">' + sub1 + y1 + '' + '' + ' = ' + sub2 + '</div>';
+            _("solution").innerHTML += '<div class="highlight">' + y1 + '' + '' + ' = <sup>' + sub2 + '</sup>&frasl;<sub>' + sub1 + '</sub></div>';
+            var div = (sub2 / sub1).toFixed(2);
+            _("solution").innerHTML += '<div class="highlight">' + y1 + '' + '' + ' = ' + div + '</div>';
+            _("solution").innerHTML += '<div class="highlight">Substitute ' + y1 + '' + '' + ' = ' + div + ' into Equation (1)</div>';
+            _("solution").innerHTML += '<div class="highlight">   ' + a1 + x1 + '' + ' ' + o1 + ' ' + b1 + ' (' + div + ')' + ' = ' + c1 + '</div>';
+            var mult = fa1 * div;
+            var stmp = "";
+            stmp = mult + "";
+            if (stmp[0] != '-') {
+                stmp = "+ " + stmp;
+            } else {
+                var tx = parseFloat(stmp) * -1;
+                stmp = "- " + tx;
+            }
+            _("solution").innerHTML += '<div class="highlight">   ' + a1 + x1 + '' + ' ' + stmp + ' = ' + c1 + '</div>';
+            var ot = mult * -1;
+            var smtp = "";
+            smtp = ot + "";
+            if (smtp[0] != '-') {
+                smtp = "+ " + smtp;
+            } else {
+                var tx = parseFloat(smtp) * -1;
+                smtp = "- " + tx;
+            }
+            _("solution").innerHTML += '<div class="highlight">   ' + a1 + x1 + '' + ' = ' + c1 + ' ' + smtp + '</div>';
+            var sub = parseFloat(c1) + ot;
+            _("solution").innerHTML += '<div class="highlight">   ' + a1 + x1 + '' + ' = ' + sub + '</div>';
+            _("solution").innerHTML += '<div class="highlight">' + x1 + '' + ' = <sup>' + sub + '</sup>&frasl;<sub>' + a1 + '</sub></div>';
+            var dix = (sub / parseFloat(a1)).toFixed(2);
+            _("solution").innerHTML += '<div class="highlight">' + x1 + '' + ' = ' + dix + '</div>';
+            _("solution").innerHTML += '<div class="highlight">Therefore, ' + x1 + '' + ' = ' + dix + ' and ' + y1 + '' + '' + ' = ' + div + '</div>';
+        }
+    }
+</script>
+
+<body>
+	<center><input type="text" id="eq1" placeholder="Type Equation one here (e.g. 2x + 3y = 15)" style="width:95%" spellcheck="false"></center>
+	<br/>
+	<center><input type="text" id="eq2" placeholder="Type Equation two here (e.g. 3x + 6y = 24)" style="width:95%" spellcheck="false"></center>
+    <center>
+        <table style="display:none">
+            <tr>
+                <td>
+                    <input type="number" id="a1" placeholder="a">
+                    <input type="text" class="var" id="x1" placeholder="x">
+                    <select id="o1">
+                    <option>+</option>
+                    <option>-</option>
+                    </select>
+                    <input type="number" id="b1" placeholder="b">
+                    <input type="text" class="var" id="y1" placeholder="y">
+                    <label>=</label>
+                    <input type="number" id="c1" placeholder="c">
+                    <label> --- (1)</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="number" id="a2" placeholder="a">
+                    <input type="text" class="var" id="x2" placeholder="x">
+                    <select id="o2">
+                    <option>+</option>
+                    <option>-</option>
+                    </select>
+                    <input type="number" id="b2" placeholder="b">
+                    <input type="text" class="var" id="y2" placeholder="y">
+                    <label>=</label>
+                    <input type="number" id="c2" placeholder="c">
+                    <label> --- (2)</label>
+                </td>
+            </tr>
+        </table>
+    </center>
+    <center><button class="solve" onclick="solve()">Solve</button></center>
+    <br/>
+    <center><i class="fas fa-info-circle"></i> All co-efficients of x or y that are 1 should not be ignored. Should be written as 1x or 1y.</center>
+    <hr/>
+    <center>
+        <div id="solution"></div>
+    </center>
+    <br/>
+    <br/>
+</body>
+</html>

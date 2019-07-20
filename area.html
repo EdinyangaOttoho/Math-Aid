@@ -1,0 +1,329 @@
+<html>
+<head>
+	<script src="all.js"></script>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="motif.png">
+<link rel="stylesheet" href="all.css">
+	<meta name="viewport" content="user-scalable=0,initial-scale=0.8,width=device-width">
+<title>Area</title></head>
+<script>
+	function cl() {
+		for (var i = 0;i < document.querySelectorAll(".input-field").length;i++) {
+            document.querySelectorAll(".input-field")[i].value = '';	
+		}
+		document.getElementById('solvearea').innerHTML = '';
+	}
+		function square(){
+			var a = document.getElementById('squareL').value;
+			x =  parseFloat(a);
+
+			document.querySelectorAll(".solvearea")[0].style.display = 'block';
+
+			document.getElementById('solvearea1').innerHTML = "Using L<sup>2</sup>, ";
+			document.getElementById('solvearea2').innerHTML = " L = " + x ;
+			document.getElementById('solvearea3').innerHTML =  "Area = " +  a + "<sup>2</sup>" ;
+			document.getElementById('solvearea4').innerHTML = "Area = " + (Math.pow(x,2));
+			document.body.scrollTop = document.body.scrollHeight;
+		}
+
+		function rectangle(){
+		var b = document.getElementById('rectL').value;
+		var c = document.getElementById('rectW').value;
+
+			x =  parseFloat(b);
+			y = parseFloat(c)
+
+			document.querySelectorAll(".solvearea")[0].style.display = 'block';
+
+			document.getElementById('solvearea1').innerHTML = "Using Length x Breadth";
+			document.getElementById('solvearea2').innerHTML = "  L = " + x ;
+			document.getElementById('solvearea3').innerHTML = "  B = " + y 
+			document.getElementById('solvearea4').innerHTML =  "Area =  " + b +" &times; "+ c ;
+			document.getElementById('solvearea5').innerHTML = " = " + x * y;
+			document.body.scrollTop = document.body.scrollHeight;
+		}
+	function para(){
+		var d = document.getElementById('paras1').value;
+		var e = document.getElementById('paras2').value;
+
+			x =  parseFloat(d);
+			y = parseFloat(e)
+
+			document.querySelectorAll(".solvearea")[0].style.display = 'block';
+
+				document.getElementById('solvearea1').innerHTML = "Using Base &times; Height, ";
+			document.getElementById('solvearea2').innerHTML = "  B = " + d ;
+			document.getElementById('solvearea3').innerHTML = "  H = " + e 
+			document.getElementById('solvearea4').innerHTML =  "Area =  " + d +" &times; "+ e ;
+			document.getElementById('solvearea5').innerHTML = " = " + x * y;
+			document.body.scrollTop = document.body.scrollHeight;
+			}	
+	function tri(){
+			
+		var f = document.getElementById('tri1').value;
+		var g = document.getElementById('tri2').value;
+
+			x =  parseFloat(f);
+			y = parseFloat(g);
+
+			document.querySelectorAll(".solvearea")[0].style.display = 'block';
+
+			document.getElementById('solvearea1').innerHTML = "Using 1/2 &times; b &times; h ,";
+			document.getElementById('solvearea2').innerHTML = "   Base = " + f ;
+			document.getElementById('solvearea3').innerHTML = "   Height = " + g + " .";
+			document.getElementById('solvearea4').innerHTML = " Area = 1/2 &times; "+ f + " &times " + g;
+			document.getElementById('solvearea5').innerHTML = " Area = 1/2 &times; " + x*y ;
+			document.getElementById('solvearea6').innerHTML = " Area = " + 1/2*x*y ;
+			document.body.scrollTop = document.body.scrollHeight;
+						}	
+	function cir(){
+			var q = document.getElementById('cirR').value;
+			x =  parseFloat(q);
+
+			document.querySelectorAll(".solvearea")[0].style.display = 'block';
+
+			document.getElementById('solvearea1').innerHTML = "Using πr<sup>2</sup>, ";
+			document.getElementById('solvearea2').innerHTML = "   r = " + q ;
+			document.getElementById('solvearea3').innerHTML = " Area = π" + q + "<sup>2</sup>" ;
+			document.getElementById('solvearea4').innerHTML = " Area = " + Math.PI +" &times; "+ q +"<sup>2</sup>";
+			document.getElementById('solvearea5').innerHTML = " Area = " + Math.PI +" &times; "+ (Math.pow(x,2));
+			document.getElementById('solvearea6').innerHTML = " Area = " + Math.PI*(Math.pow(x,2));
+			document.body.scrollTop = document.body.scrollHeight;
+			}
+
+		function n(){
+			var k = document.getElementById('n').value;
+			x =  parseFloat(k);
+
+			document.querySelectorAll(".solvearea")[0].style.display = 'block';
+
+			document.getElementById('solvearea1').innerHTML = "Using 6s<sup>2</sup>, ";
+			document.getElementById('solvearea2').innerHTML = "  s = " + k ;
+			document.getElementById('solvearea3').innerHTML = " Area = 6 &times; " + k + "<sup>2</sup>" ;
+			document.getElementById('solvearea4').innerHTML = " Area = 6 &times; "+ (Math.pow(x,2));
+			document.getElementById('solvearea5').innerHTML = " Area = " + 6*(Math.pow(x,2));
+			document.body.scrollTop = document.body.scrollHeight;
+			}
+			function tra(){
+			
+		var f = document.getElementById('tra1').value;
+		var g = document.getElementById('tra2').value;
+		var h = document.getElementById('tra3').value;
+
+			x =  parseFloat(f);
+			y = parseFloat(g);
+			z =parseFloat(h);
+
+			document.querySelectorAll(".solvearea")[0].style.display = 'block';
+
+			document.getElementById('solvearea1').innerHTML = "Using ((Base 1 + Base 2)/2) &times; Height ,";
+			document.getElementById('solvearea2').innerHTML = "  Base 1 = " + f ;
+			document.getElementById('solvearea3').innerHTML = "  Base 2 = " + g ;
+			document.getElementById('solvearea4').innerHTML = "Height = " + h ;
+			document.getElementById('solvearea5').innerHTML = " Area = ( (" + f + " + " + g +") / 2)" + " &times; "+ h;
+			document.getElementById('solvearea6').innerHTML = " Area = ( ( " +(x+y)+" ) / 2 )" + " &times; "+ h; 
+			document.getElementById('solvearea7').innerHTML = " Area = " +(x+y)/2  + " &times; "+ h; 
+			document.getElementById('solvearea8').innerHTML = " Area = " + ((x+y)/2)*h;
+			document.body.scrollTop = document.body.scrollHeight;
+
+			}	
+			function cyc(){
+		var d = document.getElementById('ra').value;
+		var e = document.getElementById('he').value;
+
+			x =  parseFloat(d);
+			y = parseFloat(e)
+
+			document.querySelectorAll(".solvearea")[0].style.display = 'block';
+
+				document.getElementById('solvearea1').innerHTML = "Using 2πrh + 2πr<sup>2</sup> ,";
+			document.getElementById('solvearea2').innerHTML = "  r = " + d ;
+			document.getElementById('solvearea3').innerHTML = "  h = " + e ;
+			document.getElementById('solvearea4').innerHTML =  "Area =  (2" + " &times; " + Math.PI + " &times; " + d + " &times; " + e +") + " + "( 2 &times; "+ Math.PI + " &times; " +d +")";
+			document.getElementById('solvearea5').innerHTML = "Area = (2 &times; " + Math.PI*d*e + ") + (2 &times; " + Math.PI*d +")"; 
+			document.getElementById('solvearea6').innerHTML = "Area = "+ 2*Math.PI*d*e + " + " + 2*Math.PI*d;
+			document.getElementById('solvearea7').innerHTML = "Area = " +(2*Math.PI*d*e+2*Math.PI*d);
+			document.body.scrollTop = document.body.scrollHeight;
+			}
+
+		
+</script>
+
+<style>
+   button {
+   	  outline:none;
+   }
+	body {
+	margin:30px;
+	background-image:url('back.png');
+	font-family:'trebuchet MS';
+	background-size:10% 10%;
+	font-weight:bold;
+
+}
+	.solvearea{
+	 	width:100%;
+	height:400px;
+	margin-top:30px;
+	background-color:black;
+	border-radius:5px;
+	float:left;
+	margin-bottom:30px;
+	color:white;
+	font-family:'trebuchet MS';
+	 	z-index:4;
+	 	padding-left:10px;
+	 }
+	 .input-field{
+	 	text-align:center;
+	 	font-family: cambria math;
+	 font-size: 20px;
+	 text-indent:all;
+	 border-radius: 5px;
+	 outline: none;
+	 padding: 5px;
+	 margin:5px;
+	 width: 60%;
+	 height:30px;
+	 border: 1px solid lightgray;
+	 text-shadow: gray 1px 1px 1px;
+	 transition: 0.5s
+
+	 }
+	 ::placeholder{
+	 	font-size:18px;
+	 	font-family:'trebuchet MS';
+	 	font-weight: lighter;
+	 }
+	 .solvearea1, .solvearea2, .solvearea3, .solvearea4, .solvearea5, .solvearea6, .solvearea7, .solvearea8{
+	 	font-size:20px;
+	 	font-family:'trebuchet MS';
+	 	text-align:left;
+	 	color:white;
+	 }
+	 .solve{
+	 	position: relative;
+	 cursor: hand;
+	 background-color: cornflowerblue;
+	 border: 0px;
+	 font-size: 17px;
+	 border-radius: 4px;
+	 padding: 3px;
+	 color: white;
+	 text-shadow: gray 1px 1px 1px;
+	 transition: 0.5s;
+
+	 }
+	 .clear {
+		position: relative;
+	 cursor: hand;
+	 background-color:tomato;
+	 border: 0px;
+	 font-size: 17px;
+	 border-radius: 4px;
+	 padding: 3px;
+	 color: white;
+	 text-shadow: gray 1px 1px 1px;
+	 transition: 0.5s;	 	
+	 }
+	  .solve:hover {
+		 opacity: 0;
+		 opacity: 1;
+		 background-color: transparent;
+		 color: black;
+		 border: 2px solid black;
+		}
+	 .panel{
+	 	float:left;
+		width:33.3%;
+		font-family:'trebuchet MS';
+		font-size:16px;
+		text-align:left;
+	 }
+	 .other {
+		border-radius:50%;
+		 background-color: cornflowerblue;
+		 border: 0px;
+		 width:40px;
+		 height:40px;
+		 font-size: 16px;
+		 color:white;
+		}
+		a {
+		color:white;
+		cursor:hand;
+		}
+
+	 @media (max-width:1000px) {
+	.panel {
+	width:50%;
+	}
+	}
+	@media (max-width:750px) {
+	.panel {
+	width:100%;
+	}
+	.input {
+	width:100%;
+	}
+	.solvearea {
+        font-size:14px;
+	}
+	}
+</style>
+<body>
+	<a href="Mensuration.html"><button class="other"><i class="fas fa-share"></i></button></a>
+<center>
+<h2>Area</h2>
+	<div class="panel">
+  		<p>Square : <br><input type="number" class="input-field" placeholder="Length" id="squareL">
+				<br> <button class="solve" id="solve" onclick="square()">Solve</button></p>
+	</div>
+	<div class="panel">
+		<p>Rectangle :<br> <input type="number" class="input-field" placeholder="Length" id="rectL"> 
+					   <input type="number" class="input-field" placeholder="Width" id="rectW">
+				<br> <button class="solve" id="solve" onclick="rectangle()">Solve</button></p>
+	</div>
+	<div class="panel">
+		<p>Parallelogram :<br> <input type="number" class="input-field" placeholder="Side 1" id="paras1"> 
+					       <input type="number" class="input-field" placeholder="Side 2" id="paras2">
+				<br> <button class="solve" id="solve" onclick="para()">Solve</button></p>
+	</div>
+	<div class="panel">
+		<p>Triangle : <br><input type="number" class="input-field" placeholder="Base" id="tri1"> 
+					  <input type="number" class="input-field" placeholder="Height" id="tri2"> 
+				<br> <button class="solve" id="solve" onclick="tri()">Solve</button></p>
+	</div>
+	<div class="panel">
+		<p>Circle : <br><input type="number" class="input-field" placeholder="Radii" id="cirR">
+	<br> <button class="solve" id="solve" onclick="cir()">Solve</button></p>
+	</div>
+	<div class="panel">
+		<p>Cube : <br><input type="number" class="input-field" placeholder="Length of Side" id="n"> 
+	<br><button class="solve" id="solve" onclick="n()">Solve</button></p>
+	</div>
+	<div class="panel">
+		<p>Trapezoid :<br> <input type="number" class="input-field" placeholder="Base 1" id="tra1"> 
+				<input type="number" class="input-field" placeholder="Base 2" id="tra2"> 
+				<input type="number" class="input-field" placeholder="Height" id="tra3">
+				<br> <button class="solve" id="solve" onclick="tra()">Solve</button></p>
+	</div>
+	<div class="panel">
+		<p>Cylinder :<br> <input type="number" class="input-field" placeholder="Radius" id="ra"> 
+				<input type="number" class="input-field" placeholder="Height" id="he">
+				<br> <button class="solve" id="solve" onclick="cyc()">Solve</button></p>		
+	</div>	
+	<center>
+	<div class="solvearea" id="solvearea">
+		<p class="solvearea1" id="solvearea1"></p>
+		<p class="solvearea2" id="solvearea2"></p>
+		<p class="solvearea3" id="solvearea3"></p>
+		<p class="solvearea4" id="solvearea4"></p>	
+		<p class="solvearea5" id="solvearea5"></p>
+		<p class="solvearea5" id="solvearea6"></p>	
+		<p class="solvearea5" id="solvearea7"></p>
+		<p class="solvearea5" id="solvearea8"></p>		
+	</div>
+	<button class="clear" onclick="cl()">Clear</button>
+</center>
+</body>

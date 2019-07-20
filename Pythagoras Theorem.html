@@ -1,0 +1,250 @@
+<html>
+
+<head>
+    <script src="all.js"></script>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="motif.png">
+<link rel="stylesheet" href="all.css">
+  <meta name="viewport" content="user-scalable=0,initial-scale=0.8,width=device-width">
+    <title>Pythagora's Theorem</title>
+</head>
+
+<style>
+    label {
+        font-size: 18px;
+        text-shadow: gray 1px 1px 1px
+    }
+    
+     ::placeholder {
+        color: lightgray;
+        text-shadow: none
+    }
+    
+    .var {
+        color: maroon;
+        text-shadow: 1px 1px 1px
+    }
+    input {
+          font-family: cambria math;
+          font-size: 20px;
+          font-style: italic;
+          text-indent:all;
+          border-radius: 3px;
+          outline: none;
+          padding: 5px;
+          width: 90%;
+          height:30px;
+          border: 1px solid black;
+          cursor: hand;
+          text-shadow: gray 1px 1px 1px;
+          transition: 0.5s
+      }
+      input:focus {
+          box-shadow:inset 0px 0px 3px 2px lightgray;
+      }
+    
+    select {
+        font-size: 18px;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid lightgray;
+        font-style: italic
+    }
+    
+    select:hover {
+        width: 40px;
+        height: 35px
+    }
+    
+    body {
+        padding-top: 15px;
+        background-image: url('back.png');
+        margin:20px;
+        background-size:10% 10%;
+        font-family: tahoma;
+    }
+    
+    .highlight {
+        cursor: hand;
+        width: 100%;
+        transition: 1s;
+        box-sizing: border-box;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    
+    table {
+        width: 80vw;
+    }
+    
+    .highlight:hover {
+        background-color: powderblue;
+        color: black;
+    }
+    
+    #solution {
+        padding:30px;
+        background-color: black;
+        width: 100%;
+        height: 400px;
+        position: relative;
+        top: 20px;
+        white-space:pre-wrap;
+        color: white;
+        overflow-y: auto;
+        text-align: left;
+        border-radius: 10px;
+        padding-bottom: 25px;
+        padding-top: 30px;
+        box-sizing: border-box;
+        font-size: 22px;
+        overflow-x: hidden;
+        font-family: cambria math
+    }
+    .alignment{
+    	width:200px;
+    }
+    
+    .solve {
+          position: relative;
+          top: 10px;
+          cursor: hand;
+          background-color: cornflowerblue;
+          border: 0px;
+          font-size: 16px;
+          border-radius: 4px;
+          padding: 3px;
+          color: white;
+          text-shadow: gray 1px 1px 1px;
+          transition: 0.5s;
+          border: 2px solid cornflowerblue;
+      }
+        .solve:hover {
+          opacity: 0;
+          opacity: 1;
+          background-color: powderblue;
+          color: black;
+          border: 2px solid black;
+      }
+      .panel {
+           float:left;
+           width:33.3%;
+           padding-top:20px;
+        }
+        input {
+           width:90%;
+        }
+        @media (max-width:1000px) {
+          .panel {
+            width:50%;
+          }
+        }
+        @media (max-width:750px) {
+          .panel {
+            width:100%;
+          }
+          input {
+            width:100%;
+          }
+        }
+         @media(max-width:800px) {
+        #solution {
+        font-size:14px;
+    }
+</style>
+<script>
+    function _(elem) {
+        return document.getElementById(elem);
+    }
+
+    function solve() {
+       if (_("h").value != '') {
+           if (_("a").value != '') {
+               _("solution").innerHTML = '';
+               _("solution").innerHTML += "Using Pythagora's Theorem,<br/>";
+               _("solution").innerHTML += "                  H<sup>2</sup> = O<sup>2</sup> + A<sup>2</sup><br/>";
+               _("solution").innerHTML += "Make O the subject of formula; O<sup>2</sup> = H<sup>2</sup> - A<sup>2</sup><br/>";
+               _("solution").innerHTML += "                  O<sup>2</sup> = "+ _("h").value +"<sup>2</sup> - " + _("a").value + "<sup>2</sup><br/>";
+               _("solution").innerHTML += "                  O<sup>2</sup> = "+ Math.pow(parseFloat(_("h").value),2).toFixed(4) +" - " + Math.pow(parseFloat(_("a").value),2).toFixed(4) + "<br/>";
+               _("solution").innerHTML += "                  O<sup>2</sup> = "+ (Math.pow(parseFloat(_("h").value),2).toFixed(4) -  Math.pow(parseFloat(_("a").value),2).toFixed(4)) + "<br/>";
+               _("solution").innerHTML += "                  O = √"+ (Math.pow(parseFloat(_("h").value),2).toFixed(4) -  Math.pow(parseFloat(_("a").value),2).toFixed(4)) + "<br/>";
+               var sqr = (Math.pow(parseFloat(_("h").value),2).toFixed(4) -  Math.pow(parseFloat(_("a").value),2).toFixed(4));
+               _("solution").innerHTML += "                  O = "+ Math.sqrt(sqr).toFixed(4) + "<br/>";
+               _("solution").innerHTML += "   Therefore, O = "+ Math.sqrt(sqr).toFixed(4) + "<br/>";
+               _("o").value = Math.sqrt(sqr).toFixed(2);
+               return;
+           }
+       }
+       if (_("h").value != '') {
+           if (_("o").value != '') {
+               _("solution").innerHTML = '';
+               _("solution").innerHTML += "Using Pythagora's Theorem,<br/>";
+               _("solution").innerHTML += "                  H<sup>2</sup> = O<sup>2</sup> + A<sup>2</sup><br/>";
+               _("solution").innerHTML += "Make A the subject of formula; A<sup>2</sup> = H<sup>2</sup> - O<sup>2</sup><br/>";
+               _("solution").innerHTML += "                  A<sup>2</sup> = "+ _("h").value +"<sup>2</sup> - " + _("o").value + "<sup>2</sup><br/>";
+               _("solution").innerHTML += "                  A<sup>2</sup> = "+ Math.pow(parseFloat(_("h").value),2).toFixed(4) +" - " + Math.pow(parseFloat(_("o").value),2).toFixed(4) + "<br/>";
+               _("solution").innerHTML += "                  A<sup>2</sup> = "+ (Math.pow(parseFloat(_("h").value),2).toFixed(4) -  Math.pow(parseFloat(_("o").value),2).toFixed(4)) + "<br/>";
+               _("solution").innerHTML += "                  A = √"+ (Math.pow(parseFloat(_("h").value),2).toFixed(4) -  Math.pow(parseFloat(_("o").value),2).toFixed(4)) + "<br/>";
+               var sqr = (Math.pow(parseFloat(_("h").value),2).toFixed(4) -  Math.pow(parseFloat(_("o").value),2).toFixed(4));
+               _("solution").innerHTML += "                  A = "+ Math.sqrt(sqr).toFixed(4) + "<br/>";
+               _("solution").innerHTML += "  Therefore, A = "+ Math.sqrt(sqr).toFixed(4) + "<br/>";
+               _("a").value = Math.sqrt(sqr).toFixed(2);
+               return;
+           }
+       }
+       if (_("a").value != '') {
+           if (_("o").value != '') {
+               _("solution").innerHTML = '';
+               _("solution").innerHTML += "Using Pythagora's Theorem,<br/>";
+               _("solution").innerHTML += "                  H<sup>2</sup> = O<sup>2</sup> + A<sup>2</sup><br/>";
+               _("solution").innerHTML += "                  H<sup>2</sup> = "+ _("o").value +"<sup>2</sup> + " + _("a").value + "<sup>2</sup><br/>";
+               _("solution").innerHTML += "                  H<sup>2</sup> = "+ Math.pow(parseFloat(_("o").value),2).toFixed(4) +" + " + Math.pow(parseFloat(_("a").value),2).toFixed(4) + "<br/>";
+               var s1 = parseFloat(Math.pow(parseFloat(_("o").value),2).toFixed(4));
+               var s2 = parseFloat(Math.pow(parseFloat(_("a").value),2).toFixed(4));
+               var st = s1 + s2;
+               _("solution").innerHTML += "                  H<sup>2</sup> = "+ st.toFixed(4) + "<br/>";
+               _("solution").innerHTML += "                  H = "+ Math.sqrt(st.toFixed(4)).toFixed(4) + "<br/>";
+               _("solution").innerHTML += "   Therefore, H = "+ Math.sqrt(st.toFixed(4)).toFixed(4) + "<br/>";
+               _("h").value = Math.sqrt(st.toFixed(4)).toFixed(2);
+               return;
+           }
+       }
+    }
+</script>
+
+<body>
+    <div class="panel">
+        <b>Hypotenuse (H):</b>
+        <br/>
+        <br/>
+        <input type="number" id="h" placeholder="H">
+    </div>
+    <br/>
+    <br/>
+    <div class="panel">
+        <b>Opposite (O):</b>
+        <br/>
+        <br/>
+        <input type="number" id="o" placeholder="O">
+    </div>
+    <br/>
+    <br/>
+    <div class="panel">
+        <b>Adjacent (A):</b>
+        <br/>
+        <br/>
+        <input type="number" id="a" placeholder="A">
+    </div>
+    <br/>
+    <br/>
+    <button class="solve" onclick="solve()">Solve</button>
+    <br/>
+    <br/>
+        <div id="solution"></div>
+        <br/>
+        <br/>
+</body>
+
+</html>

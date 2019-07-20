@@ -1,0 +1,385 @@
+<html>
+
+<head>
+    <script src="all.js"></script>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="motif.png">
+<link rel="stylesheet" href="all.css">
+    <meta name="viewport" content="user-scalable=0,initial-scale=0.8,width=device-width">
+    <title>Quadratic Equations</title>
+</head>
+
+<style>
+    button {
+        outline:none;
+    }
+    label {
+        font-size: 16px;
+        text-shadow: gray 1px 1px 1px
+    }
+    
+     ::placeholder {
+        color: gray;
+        text-shadow: none;
+        font-size:16px;
+    }
+    
+    
+    #eq {
+        font-family: cambria math;
+        background-color:white;
+        box-sizing:border-box;
+        font-size: 20px;
+        font-style: italic;
+        text-indent:all;
+        border-radius: 3px;
+        outline: none;
+        padding: 5px;
+        width: 100px;
+        height:45px;
+        border: 1px solid black;
+        cursor: hand;
+        text-shadow: gray 1px 1px 1px;
+        transition: 0.5s
+    }
+    
+    .var {
+        color: maroon;
+        text-shadow: 1px 1px 1px
+    }
+    
+    #eq:focus {
+        box-shadow:inset 0px 0px 3px 2px lightgray;
+    }
+    select {
+        font-size: 18px;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid lightgray;
+        font-style: italic
+    }
+    
+    select:hover {
+        width: 40px;
+        height: 35px
+    }
+    
+    body {
+        padding-top: 30px;
+        background-image: url('back.png');
+        background-size:10% 10%;
+        font-family: tahoma;
+    }
+    
+    .highlight {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    
+    table {
+        width: 80vw;
+        text-align: center;
+    }
+    #solution {
+        background-color: black;
+        width: 95%;
+        height: 450px;
+        position: relative;
+        top: 20px;
+        padding:25px;
+        white-space:pre-wrap;
+        color: white;
+        overflow-y: auto;
+        text-align: left;
+        border-radius: 5px;
+        padding-bottom: 25px;
+        padding-top: 30px;
+        box-sizing: border-box;
+        font-size: 20px;
+        overflow-x: hidden;
+        font-family: cambria math
+    }
+    
+    .solve {
+        position: relative;
+        top: 10px;
+        cursor: hand;
+        background-color: cornflowerblue;
+        border: 0px;
+        font-size: 16px;
+        border-radius: 4px;
+        padding: 3px;
+        color: white;
+        text-shadow: gray 1px 1px 1px;
+        transition: 0.5s;
+        border: 2px solid cornflowerblue;
+    }
+    
+    .solve:hover {
+        opacity: 0;
+        opacity: 1;
+        background-color: powderblue;
+        color: black;
+        border: 2px solid black;
+    }
+     @media(max-width:800px) {
+        #solution {
+        font-size:14px;
+    }
+</style>
+<script>
+    function _(elem) {
+        return document.getElementById(elem);
+    }
+    function f1() {
+        if (_("eq").innerHTML == '<font color="gray">Format must be ax<sup>2</sup> + bx + c = 0</font>'){
+            _("eq").innerHTML = '';
+        }
+    }
+    function f2() {
+        if (_("eq").innerHTML == '') {
+            _("eq").innerHTML = '<font color="gray">Format must be ax<sup>2</sup> + bx + c = 0</font>';
+        }
+    }
+    var a = false;
+    function ch() {
+        mtch = _("eq").innerHTML.match(/([0-9]+[a-z]|[a-z])$/i);
+        if (mtch != null && a != true) {
+           _("eq").innerHTML +='<sup>2</sup> + ';
+           a = true;
+        }
+        if (eq.innerHTML == ''){
+           a = false;
+        }
+    }
+    function sv(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            solve();
+        }
+    }
+    function solve() {
+        var str = _("eq").innerHTML;
+        str = str.replace(/\s+/g,'');
+        str = str.replace(/<sup>/g,'');
+        str = str.replace(/<\/sup>/g,'');
+        str = str.replace('=0','');
+        p1 = str.match(/^\W/);
+        str = str.replace(/^\W/,'');
+        str = str.replace(/&nbsp;/g,'');
+        var spl = str.split(/\W/g);
+        var a1 = spl[0];
+        var a2 = spl[1];
+        var a3 = spl[2];
+        var oop1 = str.match(/\W/g)[0];
+        var oop2 = str.match(/\W/g)[1];
+        var amtch = a1.match(/^[0-9]+/);
+        var aaa = '';
+        var pp1 = '';
+        if (p1 == null) {
+            pp1 = '';
+        }
+        else {
+            pp1 = p1[0];
+        }
+        if (amtch != null) {
+            aaa = pp1 + amtch[0];
+        }
+        else {
+            aaa = '';
+        }
+        var xxx = a1.match(/[a-z]+/i);
+        var bmtch = a2.match(/[0-9]+/);
+        var bbb = '';
+        if (bmtch != null) {
+            bbb = bmtch;
+        }
+        else {
+            bbb = '';
+        }
+        var yyy = a2.match(/[a-z]+/i);
+        var ccc = a3;
+        _("a").value = aaa;
+        _("x").value = xxx;
+        _("o1").value = oop1;
+        _("b").value = bbb;
+        _("y").value = yyy;
+        _("o2").value = oop2;
+        _("c").value = ccc;
+        _("solution").innerHTML = '';
+        var b = '';
+        if (_("a").value == '') {
+            _("a").value = '1';
+        }
+        if (_("o1").value.includes("-")){
+            b = _("b").value;
+        }
+        else {
+            b = '-'+_("b").value;
+        }
+        if (_("o2").value.includes("-")){
+            c = '-' + _("c").value;
+        }
+        else {
+            c = _("c").value;
+        }
+        if (c.includes('-') || _("a").value.includes('-')) {
+            _("solution").innerHTML += 'Using Completing the squares method,<br/><br/>';
+            _("solution").innerHTML += '                     ' + _("a").value + xxx + '<sup>2</sup> ' + oop1 + ' ' + _("b").value + yyy + ' ' + oop2 + ' ' + _("c").value + ' = 0<br/>';
+            if (_("a").value == '1') {
+                var wa = parseFloat(oop2+_("c").value);
+                var w1 = '' + parseFloat(oop2+_("c").value);
+                if (w1.includes("-")) {
+                    w1 = wa * -1;
+                    w1 = w1;
+                }
+                else {
+                    wa = wa * -1;
+                    w1 = ' - ' + wa;
+                }
+                _("solution").innerHTML += '                     ' + xxx + '<sup>2</sup> ' + oop1 + ' ' + _("b").value + yyy + ' = ' + w1 +'<br/><br/>';
+                 _("solution").innerHTML += 'Take (b/2)<sup>2</sup> and add to both sides<br/>';
+                _("solution").innerHTML += '              = ('+ oop1+_("b").value +'/2)<sup>2</sup><br/>';
+                _("solution").innerHTML += '              = ('+ (parseFloat(oop1+_("b").value)/2) +')<sup>2</sup> = ' + Math.pow((parseFloat(oop1+_("b").value)/2),2) + '<br/><br/>';
+                var waa = Math.pow((parseFloat(oop1+_("b").value)/2),2);
+                _("solution").innerHTML += '                     ' + xxx + '<sup>2</sup> ' + oop1 + ' ' + _("b").value + yyy + ' + ' + waa + ' = ' + w1 + ' + ' + waa +'<br/>';
+                var pp = (parseFloat(oop1 + _("b").value)/2);
+                var p  = '' + pp;
+                if (p.includes('-')) {
+                    p = ' - ' + pp * -1;
+                    p = p;
+                }
+                else {
+                    p = ' + ' + p;
+                }
+                _("solution").innerHTML += '                     (x ' + p + ')<sup>2</sup> = ' + parseFloat(w1+waa) + '<br/>';
+                _("solution").innerHTML += '                     x ' + p + '<sup></sup> = ±√' + parseFloat(w1+waa) + '<br/>';
+                _("solution").innerHTML += '                     x ' + p + '<sup></sup> = ± ' + (Math.sqrt(parseFloat(w1+waa))).toFixed(4) + '<br/>';
+                var sss = '' + p.replace(/\s+/g,'');
+                var q = parseFloat(sss * -1);
+                _("solution").innerHTML += '                     x  = ' + q + ' + ' + (Math.sqrt(parseFloat(w1+waa))).toFixed(4) + '  OR  x = ' + q + ' - ' + (Math.sqrt(parseFloat(w1+waa))).toFixed(4) + '<br/>';
+                var ax1 = q;
+                var ax2 = (Math.sqrt(parseFloat(w1+waa))).toFixed(4);
+                var ax = parseFloat(ax1) + parseFloat(ax2);
+                var ay1 = q;
+                var ay2 = (Math.sqrt(parseFloat(w1+waa))).toFixed(4);
+                var ay = parseFloat(ay1) - parseFloat(ay2);
+                _("solution").innerHTML += '                     x  = ' + ax.toFixed(4) + '  OR  x = ' + ay.toFixed(4);
+                return;
+            }
+            else if (_("a").value.match(/(\-[0-9]|[0-9])+/)!=null){
+                _("b").value = parseFloat(oop1+_("b").value)/parseFloat(_("a").value);
+                _("c").value = parseFloat(oop2+_("c").value)/parseFloat(_("a").value);
+                _("solution").innerHTML += '<br/>Divide through by '+ _("a").value +' and cross c to the right,<br/>';
+                _("a").value = '1';
+                if (_("b").value.includes("-")){
+                    oop1 = '-';
+                    _("b").value = parseFloat(_("b").value) * -1;
+                }
+                else {
+                    oop1 = '+';
+                }
+                if (_("c").value.includes("-")){
+                    oop2 = '-';
+                    _("c").value = parseFloat(_("c").value) * -1;
+                }
+                else {
+                    oop2 = '+';
+                }
+                var wa = parseFloat(oop2+_("c").value);
+                var w1 = '' + parseFloat(oop2+_("c").value);
+                if (w1.includes('-')) {
+                    w1 = wa * -1;
+                }
+                else {
+                    w1 = ' -' + w1;
+                }
+                _("solution").innerHTML += '                     ' + xxx + '<sup>2</sup> ' + oop1 + ' ' + _("b").value + yyy + ' = ' + w1 +'<br/><br/>';
+                _("solution").innerHTML += 'Take (b/2)<sup>2</sup> and add to both sides<br/>';
+                _("solution").innerHTML += '              = ('+ oop1+_("b").value +'/2)<sup>2</sup><br/>';
+                _("solution").innerHTML += '              = ('+ (parseFloat(oop1+_("b").value)/2).toFixed(4) +')<sup>2</sup> = ' + Math.pow((parseFloat(oop1+_("b").value)/2),2).toFixed(4) + '<br/></br>';
+                var waa = Math.pow((parseFloat(oop1+_("b").value)/2),2).toFixed(4);
+                _("solution").innerHTML += '                     ' + xxx + '<sup>2</sup> ' + oop1 + ' ' + _("b").value + yyy + ' + ' + waa + ' = ' + w1 + ' + ' + waa +'<br/>';
+                var pp = (parseFloat(oop1 + _("b").value)/2);
+                var p  = '' + pp;
+                if (p.includes('-')) {
+                    p = ' - ' + pp * -1;
+                    p = p;
+                }
+                else {
+                    p = ' + ' + p;
+                }
+                _("solution").innerHTML += '                     (x ' + p + ')<sup>2</sup> = ' + parseFloat(w1+waa) + '<br/>';
+                _("solution").innerHTML += '                     x ' + p + '<sup></sup> = ±√' + parseFloat(w1+waa) + '<br/>';
+                _("solution").innerHTML += '                     x ' + p + '<sup></sup> = ± ' + (Math.sqrt(parseFloat(w1+waa))).toFixed(4) + '<br/>';
+                var sss = '' + p.replace(/\s+/g,'');
+                var q = parseFloat(sss * -1);
+                _("solution").innerHTML += '                     x  = ' + q + ' + ' + (Math.sqrt(parseFloat(w1+waa))).toFixed(4) + '  OR  x = ' + q + ' - ' + (Math.sqrt(parseFloat(w1+waa))).toFixed(4) + '<br/>';
+                var ax1 = q;
+                var ax2 = (Math.sqrt(parseFloat(w1+waa))).toFixed(4);
+                var ax = parseFloat(ax1) + parseFloat(ax2);
+                var ay1 = q;
+                var ay2 = (Math.sqrt(parseFloat(w1+waa))).toFixed(4);
+                var ay = parseFloat(ay1) - parseFloat(ay2);
+                _("solution").innerHTML += '                     x  = ' + ax.toFixed(4) + '  OR  x = ' + ay.toFixed(4);
+                return;
+            }
+        }
+        else {
+            _("solution").innerHTML += 'Using the quadratic Formula,<br/><br/>';
+            _("solution").innerHTML += '                     x<sup>2</sup> = (b<sup>2</sup> ± √4ac)/2a<br/><br/>';
+            _("solution").innerHTML += '                     x<sup>2</sup> = ('+ b +'<sup>2</sup> ± √4 &times; '+ _("a").value + ' &times; '+ c +')/2 &times; '+ _("a").value + '<br/><br/>';
+            _("solution").innerHTML += '                     x<sup>2</sup> = ('+ b +'<sup>2</sup> ± √'+ ( 4 * _("a").value * c ) +')/'+(2 *_("a").value) + '<br/><br/>';
+            _("solution").innerHTML += 'Hence, <br/><br/>';
+            _("solution").innerHTML += '                     x<sup>2</sup> = ('+ b +'<sup>2</sup> + √'+ ( 4 * _("a").value * c ) +')/'+(2 *_("a").value) + '   OR   x<sup>2</sup> = ('+ b +'<sup>2</sup> - √'+ ( 4 * _("a").value * c ) +')/'+(2 *_("a").value)+'<br/><br/>';
+            _("solution").innerHTML += '                     x<sup>2</sup> = ('+ Math.pow(parseFloat(b),2).toFixed(4) +' + '+ Math.sqrt(( 4 * _("a").value * c )).toFixed(4) +')/'+(2 *_("a").value).toFixed(4) + '   OR   x<sup>2</sup> = ('+ Math.pow(parseFloat(b),2).toFixed(4) +' - '+ Math.sqrt(( 4 * _("a").value * c )).toFixed(4) +')/'+(2 *_("a").value).toFixed(4)+'<br/><br/>';
+            var a1 = parseFloat(Math.pow(parseFloat(b),2).toFixed(4));
+            var a2 = parseFloat(Math.sqrt(( 4 *_("a").value * c )).toFixed(4));
+            var s = a1 + a2;
+            var t = ((Math.pow(parseFloat(b),2).toFixed(4)) - (Math.sqrt(( 4 * _("a").value * c )).toFixed(4)));
+            _("solution").innerHTML += '                     x<sup>2</sup> = '+ s +'/'+ (2 *_("a").value).toFixed(4) + '   OR   x<sup>2</sup> = '+ t.toFixed(4) +'/'+(2 *_("a").value).toFixed(4)+'<br/><br/>';
+            _("solution").innerHTML += '                     x<sup>2</sup> = '+ (s/(2 *_("a").value).toFixed(4)).toFixed(4) + '   OR   x<sup>2</sup> = '+ (t.toFixed(4)/(2 *_("a").value).toFixed(4)).toFixed(4) +'<br/><br/>';
+            _("solution").innerHTML += '                     x = √'+ (s/(2 *_("a").value).toFixed(4)).toFixed(4) + '   OR   x = √'+ (t.toFixed(4)/(2 *_("a").value).toFixed(4)).toFixed(4) +'<br/><br/>';
+            _("solution").innerHTML += '                     x = '+ Math.sqrt((s/(2 *_("a").value).toFixed(4)).toFixed(4)).toFixed(4) + '   OR   x = '+ Math.sqrt((t.toFixed(4)/(2 *_("a").value).toFixed(4)).toFixed(4)).toFixed(2) +'<br/><br/>';
+            return;
+        }
+        
+    }
+</script>
+
+<body>
+    <center><div contenteditable="true" id="eq" style="width:95%;text-align:left" spellcheck="false" oninput="ch()" onfocus="f1()" onblur="f2()" onclick="this.focus()" onkeypress="sv(event)"><font color="gray">Format must be ax<sup>2</sup> + bx + c = 0</font></div></center>
+    <center>
+        <table style="display:none">
+            <tr>
+                <td>
+                    <input type="number" id="a" placeholder="a">
+                    <input type="text" class="var" id="x" placeholder="x">
+                    <sup>2</sup>
+                    <select id="o1">
+                    <option>+</option>
+                    <option>-</option>
+                    </select>
+                    <input type="number" id="b" placeholder="b">
+                    <input type="text" class="var" id="y" placeholder="x">
+                    <select id="o2">
+                    <option>+</option>
+                    <option>-</option>
+                    </select>
+                    <input type="number" id="c" placeholder="c">
+                    <label>= 0</label>
+                </td>
+            </tr>
+        </table>
+    </center>
+    <center><button class="solve" onclick="solve()">Solve</button></center>
+    <br/>
+    <center><i class="fas fa-info-circle"></i> All co-efficients of x that are 1 should not be ignored. Should be written as 1x.</center>
+    <hr/>
+    <center>
+        <div id="solution"></div>
+    </center>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<html>
+
+<head>
+    <script src="all.js"></script>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="motif.png">
+<link rel="stylesheet" href="all.css">
+    <meta name="viewport" content="user-scalable=0,initial-scale=0.8,width=device-width">
+    <title>Standard Deviation and Variance</title>
+</head>
+
+<style>
+    body {
+        margin:0;
+        background-image: url('back.png');
+        font-family:candara;
+        background-size:10% 10%;
+    }
+    .head{
+      background-color:cornflowerblue;
+      border:1px solid black;
+      text-shadow:gray 1px 1px 1px;
+      width:30px;
+      color:white;
+      padding:2px;
+      font-size:18px;
+      font-family:tahoma;
+    }
+    .body{
+      width:30px;
+      background-color:white;
+      border:1px solid black;
+      font-family:cambria math;
+      font-size:15px;
+    }
+    h3{
+      font-family:tahoma;
+      color:gray;
+    }
+    label {
+        white-space: pre-wrap;
+        font-size: 15px;
+        text-shadow: gray 1px 1px 1px
+    }
+    
+     ::placeholder {
+        color: lightgray;
+        text-shadow: none
+    }
+    
+    input {
+        font-family: cambria math;
+        font-size: 20px;
+        font-style: italic;
+        text-indent:all;
+        border-radius: 3px;
+        outline: none;
+        padding: 5px;
+        width: 100%;
+        height:35px;
+        border: 1px solid black;
+        cursor: hand;
+        text-shadow: gray 1px 1px 1px;
+        transition: 0.5s
+    }
+    
+    input:focus {
+        box-shadow:inset 0px 0px 3px 2px lightgray;
+    }
+
+    .var {
+        color: maroon;
+        text-shadow: 1px 1px 1px
+    }
+    
+    select {
+        font-size: 15px;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid lightgray;
+        font-style: italic
+    }
+    
+    select:hover {
+        width: 40px;
+        height: 35px
+    }
+    
+    .highlight {
+        cursor: hand;
+        width: 80%;
+        transition: 1s;
+        box-sizing: border-box;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    
+    table {
+        width: 80vw;
+        text-align: center;
+    }
+    
+    .highlight:hover {
+        background-color: powderblue;
+        color: black;
+    }
+    
+    #solution {
+        width: 95%;
+        position: relative;
+        top: 20px;
+        overflow-y: auto;
+        text-align: left;
+        padding-bottom: 25px;
+        padding-top: 15px;
+        box-sizing: border-box;
+        font-size: 17px;
+        overflow-x: hidden;
+        font-family: cambria math
+    }
+    #solver {
+    	background-color:black;
+    	padding:20px;
+    	white-space:pre-wrap;
+    	width:95%;
+    	box-sizing:border-box;
+    	color:white;
+    	text-align:left;
+    	font-style:italic;
+    	font-size:18px;
+    }
+    
+    .solve {
+        position: relative;
+        top: 10px;
+        cursor: hand;
+        background-color: cornflowerblue;
+        border: 0px;
+        font-size: 16px;
+        border-radius: 4px;
+        padding: 3px;
+        color: white;
+        text-shadow: gray 1px 1px 1px;
+        transition: 0.5s;
+        border: 2px solid cornflowerblue;
+    }
+    
+    .solve:hover {
+        opacity: 0;
+        opacity: 1;
+        background-color: powderblue;
+        color: black;
+        border: 2px solid black;
+    }
+    .white {
+    	border:1px solid black;
+    	padding:5px;
+    	box-sizing:border-box;
+    	background-color:white;
+    }
+    @media (max-width:900px) {
+    	#solution {
+    		width:95%;
+    	}
+    	#solver {
+    		width:95%;
+    	}
+        #span {
+            width:95%;
+        }        
+    }
+     @media(max-width:800px) {
+        #solution {
+        font-size:14px;
+    }
+</style>
+<script>
+    function _(elem) {
+        return document.getElementById(elem);
+    }
+    function solve() {
+    	_("solution").innerHTML = '<tr><td class="head"><center>x</center></td><td class="head"><center>f</center></td><td class="head"><center>fx</center></td><td class="head"><center>x-n</center></td><td class="head"><center>(x-n)<sup>2</sup></center></td><td class="head"><center>f(x-n)<sup>2</sup></center></td></tr>';
+    	_("solver").innerHTML = '';
+        var a = _("x").value;
+        var b = _("f").value;
+        a = a.replace(' ','');
+        b = b.replace(' ','');
+        a = a.replace(/^\,/,'');
+        b = b.replace(/^\,/,'');
+        a = a.replace(/\,$/,'');
+        b = b.replace(/\,$/,'');
+        var x = new Array();
+        var y = new Array();
+        if (a.includes(",")) {
+  			x = a.split(",");
+        }
+        else {
+        	x[0]= a;
+        }
+        if (b.includes(",")) {
+  			y = b.split(",");
+        }
+        else {
+        	y[0]= b;
+        }
+        if (x.length != y.length) {
+        	alert("Some data have not been given frequencies!");
+        }
+        else {
+        	for (var i=0;i<x.length;i++) {
+                _("solution").innerHTML += '<tr><td class="x white">'+ x[i] +'</td><td class="f white">'+ y[i] +'</td><td class="fx white"></td><td class="xn white"></td><td class="xnxn white"></td><td class="fxn white"></td></tr>';
+        	}
+        	calc();
+        }
+    }
+    function calc() {
+    	var x = document.querySelectorAll('.x');
+    	var f = document.querySelectorAll('.f');
+    	var fx = document.querySelectorAll('.fx');
+    	var xn = document.querySelectorAll('.xn');
+    	var xnxn = document.querySelectorAll('.xnxn');
+    	var fxn = document.querySelectorAll('.fxn');
+    	var o = '';
+    	var n = '';
+    	for (var i=0;i<fx.length;i++) {
+    		o += '+' + f[i].innerHTML;
+    		fx[i].innerHTML = (parseFloat(x[i].innerHTML) * parseFloat(f[i].innerHTML)).toFixed(4);
+    		n += '+' + fx[i].innerHTML;
+    	}
+    	o = o.replace(/^\+/,'');
+    	n = n.replace(/^\+/,'');
+    	var oo = eval(o);
+    	var nn = eval(n);
+    	var mean = parseFloat((nn/oo)).toFixed(4);
+    	for (var i=0;i<xn.length;i++) {
+    		xn[i].innerHTML = (parseFloat(x[i].innerHTML) - mean).toFixed(4);
+    	}
+    	for (var i=0;i<xnxn.length;i++) {
+    		xnxn[i].innerHTML = Math.pow(parseFloat(xn[i].innerHTML),2).toFixed(4);
+    	}
+    	var p = '';
+    	for (var i=0;i<fxn.length;i++) {
+    		fxn[i].innerHTML = (parseFloat(xnxn[i].innerHTML) * parseFloat(f[i].innerHTML)).toFixed(4);
+    		p += '+' + fxn[i].innerHTML;
+    	}
+    	p = p.replace(/^\+/,'');
+    	var pp = eval(p);
+    	_("solver").innerHTML += 'Mean (n) = £fx/£f<br/>';
+    	_("solver").innerHTML += '             = '+ nn +'/'+ oo +'<br/>';
+    	_("solver").innerHTML += '             = ' + mean + '<br/><br/>';
+    	_("solver").innerHTML += 'Using the Formula;<br/>';
+    	_("solver").innerHTML += '                Variance (V) = £f(x - n)<sup>2</sup>/£f<br/>';
+    	_("solver").innerHTML += '                                  = '+ pp +'/'+ oo +'<br/>';
+    	_("solver").innerHTML += '                                  = '+ (pp/oo).toFixed(4) +'<br/><br/>';
+    	_("solver").innerHTML += '     Standard Deviation (SD) = √Variance<br/>';
+    	_("solver").innerHTML += '                                        = √('+ (pp/oo).toFixed(4) +')<br/>';
+    	_("solver").innerHTML += '                                        = '+ Math.sqrt(pp/oo).toFixed(4) +'<br/>';
+    }
+</script>
+
+<body>
+    <br/>
+    <center><h3>Enter values (Should be separated by commas)</h3></center>
+    <center>
+        <table style="width:95%" id="span">
+            <tr>
+                <td colspan="3" style="padding-bottom:10px">
+                    <p align="left"><label>Values (x): </label></p>
+                    <p align="left"><input type="text" id="x" placeholder="e.g: 2,3,4,5,6,7,8"></p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <p align="left"><label> Frequency (f): </label></p>
+                    <p align="left"><input type="text" id="f" placeholder="e.g: 2,3,4,5,6,7,8"></p>
+                </td>
+            </tr>
+        </table>
+    </center>
+    <center><button class="solve" onclick="solve()">Solve</button></center>
+    <br/>
+    <center>
+        <table id="solution" cellspacing="0" cellpadding="0" style="width:95%;white-space:pre-wrap">
+            <tr>
+                <td class="head"><center>x</center></td>
+                <td class="head"><center>f</center></td>
+                <td class="head"><center>fx</center></td>
+                <td class="head"><center>x-n</center></td>
+                <td class="head"><center>(x-n)<sup>2</sup></center></td>
+                <td class="head"><center>f(x-n)<sup>2</sup></center></td>
+            </tr>
+        </table>
+        <br/>
+        <div id="solver"></div>
+    </center>
+</body>
+</html>  

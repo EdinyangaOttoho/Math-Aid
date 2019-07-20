@@ -1,0 +1,279 @@
+<html>
+<head>
+	<script src="all.js"></script>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="motif.png">
+    <link rel="stylesheet" href="all.css">
+	<meta name="viewport" content="user-scalable=0,initial-scale=0.8,width=device-width">
+	<style>
+        body {
+            background-image:url('motif.png');
+            background-size:10% 10%;
+        }
+        #load {
+        	position:fixed;
+        	top:0px;
+        	left:0px;
+        	height:100vh;
+        	width:100vw;
+        	background-color:rgba(0,0,0,0.8);
+        	opacity:0;
+        	visibility:hidden;
+        	transition:1s;
+        	overflow:auto;
+        }
+        .close {
+        	position:fixed;
+	    	z-index:2;
+	    	background-color:maroon;
+	    	border:0px;
+	    	color:white;
+	    	border-radius:50%;
+	    	transition:0.5s;
+	    	width:40px;
+	    	height:40px;
+	    	font-size:30px;
+	    	top:10px;
+	    	right:10px;
+	    	cursor:hand;
+        }
+        #modal {
+        	width:50%;
+        	height:90vh;
+        	position:relative;
+        	border-radius:10px;
+        	top:5vh;
+        	background-color:#f2f2f2;
+        	box-sizing:border-box;
+        	padding:20px;
+        }
+        .display {
+        	height:120px;
+        	background-color:rgb(200,250,200);
+        	border:1px solid lightgray;
+        	padding:5px;
+        }
+        #question {
+            width:100%;
+            max-width:100%;
+            height:70px;
+            background-color:transparent;
+            border:0px;
+            resize:none;
+            font-size:27px;
+            font-family:elephant;
+            outline:none;
+            cursor:none;
+        }
+        #answer {
+        	height:30px;
+        	max-width:100%;
+        	background-color:transparent;
+        	width:100%;
+        	border:0px;
+        	resize:none;
+        	outline:none;
+        	font-size:20px;
+            font-family:elephant;
+            text-align:right;
+            cursor:none;
+        }
+        .digits {
+        	width:100%;
+        	height:100%;
+        	background-color:rgb(230,230,230);
+        	border:1px solid lightgray;
+        	transition:0.5s;
+        	cursor:hand;
+        	font-size:30px;
+        	font-family:comic sans MS;
+        	font-weight:bold;
+        	outline:none;
+        }
+        .digits:hover {
+        	background-color:lightgray;
+        }
+        .digits:active {
+        	box-shadow:inset 0px 0px 4px 2px gray;
+        }
+        @media (max-width:800px) {
+            #modal {
+            	width:90vw;
+            }
+        }
+	</style>
+	<script>
+		var a = false;
+		function inp(x) {
+			if (a == true) {
+				document.getElementById("question").innerHTML = '';
+			    document.getElementById("question").innerHTML += x;
+			    a = false;
+			}
+			else {
+			    document.getElementById("question").innerHTML += x;
+			}
+		}
+		function ent(event) {
+			if (event.keyCode == 32){
+                cl();
+			}
+			if (event.keyCode == 13){
+                solve();
+			}
+			if (event.keyCode == 49){
+                inp('1');
+			}
+			if (event.keyCode == 50){
+                inp('2');   
+			}
+			if (event.keyCode == 51){
+                inp('3');
+			}
+			if (event.keyCode == 52){
+                inp('4');
+			}
+			if (event.keyCode == 53){
+                inp('5');
+			}
+			if (event.keyCode == 54){
+                inp('6');
+			}
+			if (event.keyCode == 55){
+                inp('7');
+			}
+			if (event.keyCode == 56){
+                inp('8');
+			}
+			if (event.keyCode == 57){
+                inp('9');
+			}
+			if (event.keyCode == 48){
+                inp('0');
+			}
+			if (event.keyCode == 43){
+                inp('+');
+			}
+			if (event.keyCode == 45){
+                inp('-');
+			}
+			if (event.keyCode == 47){
+                inp('/');
+			}
+			if (event.keyCode == 42){
+                inp('*');
+			}
+			if (event.keyCode == 115){
+                inp('sin');
+			}
+			if (event.keyCode == 99){
+                inp('cos');
+			}
+			if (event.keyCode == 116){
+                inp('tan');
+			}
+		}
+		function cl() {
+			document.getElementById("question").innerHTML = '';
+			document.getElementById("answer").innerHTML = '';
+			window.location.replace("calculator.html");
+			a = false;
+		}
+		function solve() {
+			var str = document.getElementById("question").innerHTML;
+			document.getElementById("question").innerHTML = document.getElementById("question").innerHTML.replace(/×/g,'*');
+			if (str.includes('sin')) {
+			    var s = str.match(/sin(\w|\.)+/g);
+			    if (s != null) {
+			    	for (var i=0;i<s.length;i++) {
+                        var t = s[i].replace('sin','');
+                        var sl = parseFloat(t)/(180/Math.PI);
+                        var slv = Math.sin(sl).toFixed(9);
+                        document.getElementById("question").innerHTML = document.getElementById("question").innerHTML.replace(/sin(\w|\.)+/,slv);
+			        }
+			    }
+			}
+			if (str.includes('cos')) {
+			    var s = str.match(/cos(\w|\.)+/g);
+			    if (s != null) {
+			    	for (var i=0;i<s.length;i++) {
+                        var t = s[i].replace('cos','');
+                        var sl = parseFloat(t)/(180/Math.PI);
+                        var slv = Math.cos(sl).toFixed(9);
+                        document.getElementById("question").innerHTML = document.getElementById("question").innerHTML.replace(/cos(\w|\.)+/,slv);
+			        }
+			    }
+			}
+			if (str.includes('tan')) {
+			    var s = str.match(/tan(\w|\.)+/g);
+			    if (s != null) {
+			    	for (var i=0;i<s.length;i++) {
+                        var t = s[i].replace('tan','');
+                        var sl = parseFloat(t)/(180/Math.PI);
+                        var slv = Math.tan(sl).toFixed(9);
+                        document.getElementById("question").innerHTML = document.getElementById("question").innerHTML.replace(/tan(\w|\.)+/,slv);
+			        }
+			    }
+			}
+			document.getElementById("answer").innerHTML = eval(document.getElementById("question").innerHTML).toFixed(9);
+			document.getElementById("question").innerHTML = str;
+			if (document.getElementById("answer").innerHTML == 'NaN') {
+                document.getElementById("answer").innerHTML = '<font color="red">Syntax error</font>';
+			}
+			a = true;
+		}
+        function show() {
+        	document.getElementById('load').style.visibility = 'visible';
+        	setTimeout(function(){
+               document.getElementById('load').style.opacity = '1';
+        	},1);
+        }
+	</script>
+	<title>Calculator</title>
+</head>
+<body onload="show()" onkeypress="ent(event)">
+	<div id="load">
+		<center>
+			<table id="modal" cellspacing="5">
+				<tr>
+					<td colspan="5" class="display">
+						<div id="question"></div>
+						<br/>
+						<div id="answer"></div>
+					</td>
+				</tr>
+				<tr><td colspan="5" style="height:10px"></td></tr>
+				<tr>
+					<td><button class="digits" onclick="inp(this.innerHTML)">1</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">2</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">3</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">+</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">sin</button></td>
+				</tr>
+				<tr>
+					<td><button class="digits" onclick="inp(this.innerHTML)">4</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">5</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">6</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">-</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">cos</button></td>
+				</tr>
+				<tr>
+					<td><button class="digits" onclick="inp(this.innerHTML)">7</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">8</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">9</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">/</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">tan</button></td>
+				</tr>
+				<tr>
+					<td><button class="digits" onclick="inp(this.innerHTML)">.</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">0</button></td>
+					<td><button class="digits" onclick="cl()">C</button></td>
+					<td><button class="digits" onclick="inp(this.innerHTML)">&times;</button></td>
+					<td><button class="digits" onclick="solve()">=</button></td>
+				</tr>
+			</table>
+		</center>
+	</div>
+	<a href="index.html"><button class="close">&times;</button></a>
+</body>
+</html>

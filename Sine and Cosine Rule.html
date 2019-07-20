@@ -1,0 +1,504 @@
+<html>
+
+<head>
+    <script src="all.js"></script>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="motif.png">
+<link rel="stylesheet" href="all.css">
+    <meta name="viewport" content="user-scalable=0,initial-scale=0.8,width=device-width">
+    <title>Sine and Cosine Rule</title>
+</head>
+
+<style>
+    label {
+        font-size: 18px;
+        text-shadow: gray 1px 1px 1px
+    }
+    
+     ::placeholder {
+        color: gray;
+        text-shadow: none
+    }
+    input {
+          font-family: cambria math;
+          font-size: 20px;
+          font-style: italic;
+          text-indent:all;
+          border-radius: 3px;
+          outline: none;
+          padding: 5px;
+          width: 90%;
+          height:30px;
+          border: 1px solid black;
+          cursor: hand;
+          text-shadow: gray 1px 1px 1px;
+          transition: 0.5s
+      }
+      input:focus {
+          box-shadow:inset 0px 0px 3px 2px lightgray;
+      }
+    
+    .var {
+        color: maroon;
+        text-shadow: 1px 1px 1px
+    }
+    .left{
+    	padding-left:45px;
+    	text-align:left;
+    	position:relative;
+    	left:-75px;
+    	z-index:3;
+    }
+    .right{
+    	padding-right:45px;
+    	text-align:right;
+        position:relative;
+        left:75px;
+        z-index:3;
+    }
+    .triangle{
+    	width:200px;
+    	height:210px;
+    }
+    
+    select {
+        font-size: 18px;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid lightgray;
+        font-style: italic
+    }
+    
+    select:hover {
+        width: 40px;
+        height: 35px
+    }
+    
+    body {
+        padding-top: 15px;
+        background-image: url('back.png');
+        background-size:10% 10%;
+        font-family: tahoma;
+    }
+    
+    .highlight {
+        cursor: hand;
+        width: 100%;
+        transition: 1s;
+        box-sizing: border-box;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    
+    table {
+        width: 80vw;
+    }
+    
+    .highlight:hover {
+        background-color: powderblue;
+        color: black;
+    }
+    
+    #solution {
+        background-color: black;
+        width: 96%;
+        height: 450px;
+        position: relative;
+        top: 20px;
+        color: white;
+        overflow-y: auto;
+        text-align: left;
+        border-radius: 5px;
+        white-space:pre-wrap;
+        padding-bottom: 25px;
+        padding-top: 20px;
+        box-sizing: border-box;
+        font-size: 20px;
+        overflow-x: hidden;
+        font-family: cambria math
+    }
+    .alignment{
+    	width:200px;
+    }
+    
+    .solve {
+          position: relative;
+          top: 10px;
+          cursor: hand;
+          background-color: cornflowerblue;
+          border: 0px;
+          font-size: 16px;
+          border-radius: 4px;
+          padding: 3px;
+          color: white;
+          text-shadow: gray 1px 1px 1px;
+          transition: 0.5s;
+          border: 2px solid cornflowerblue;
+      }
+        .solve:hover {
+          opacity: 0;
+          opacity: 1;
+          background-color: powderblue;
+          color: black;
+          border: 2px solid black;
+      }
+    .panel {
+         float:left;
+         width:33.3%;
+         padding-top:20px;
+    }
+    @media (max-width:1000px) {
+        .panel {
+            width:50%;
+        }
+    }
+    @media (max-width:750px) {
+        .panel {
+            width:100%;
+        }
+        input {
+            width:100%;
+        }
+    }
+     @media(max-width:800px) {
+        #solution {
+        font-size:14px;
+    }
+</style>
+<script>
+    function _(elem) {
+        return document.getElementById(elem);
+    }
+    function solve() {
+        _("solution").innerHTML = '';
+        if (_("a").value != ''){
+            if (_("b").value != '') {
+                if (_("c").value != '') {
+                    _("solution").innerHTML += '    Using Cosine Rule,<br/>';
+                    _("solution").innerHTML += '                      a<sup>2</sup> = b<sup>2</sup> + c<sup>2</sup> - 2bcCosA<br/>';
+                    _("solution").innerHTML += '                      '+ parseFloat(_("a").value).toFixed(4) +'<sup>2</sup> = '+ parseFloat(_("b").value).toFixed(4) +'<sup>2</sup> + '+ parseFloat(_("c").value).toFixed(4) +'<sup>2</sup> - 2&times;' + parseFloat(_("b").value).toFixed(4) + '&times;'+ parseFloat(_("c").value).toFixed(4) +'CosA<br/>';
+                    _("solution").innerHTML += '                      '+ Math.pow(parseFloat(_("a").value).toFixed(4),2) +' = '+ Math.pow(parseFloat(_("b").value).toFixed(4),2) + ' + '+ Math.pow(parseFloat(_("c").value).toFixed(4),2) + ' - ' + (2 * parseFloat(_("b").value).toFixed(4) *  parseFloat(_("c").value).toFixed(4)) +'CosA<br/>';
+                    _("solution").innerHTML += '                      '+ Math.pow(parseFloat(_("a").value).toFixed(4),2) +' = '+ (Math.pow(parseFloat(_("b").value).toFixed(4),2) + Math.pow(parseFloat(_("c").value).toFixed(4),2)) + ' - ' + (2 * parseFloat(_("b").value).toFixed(4) *  parseFloat(_("c").value).toFixed(4)) +'CosA<br/>';
+                    var t = (Math.pow(parseFloat(_("b").value).toFixed(4),2) + Math.pow(parseFloat(_("c").value).toFixed(4),2));
+                    var tt = t * -1;
+                    _("solution").innerHTML += '                      '+ tt + ' + ' + Math.pow(parseFloat(_("a").value).toFixed(4),2) +' = ' + ' -' + (2 * parseFloat(_("b").value).toFixed(4) *  parseFloat(_("c").value).toFixed(4)) +'CosA<br/>';
+                    _("solution").innerHTML += '                      '+ (tt + Math.pow(parseFloat(_("a").value).toFixed(4),2)) +' = ' + ' -' + (2 * parseFloat(_("b").value).toFixed(4) *  parseFloat(_("c").value).toFixed(4)) +'CosA<br/>';
+                    _("solution").innerHTML += '                      '+ (tt + Math.pow(parseFloat(_("a").value).toFixed(4),2)) +' / '+ '-' + (2 * parseFloat(_("b").value).toFixed(4) *  parseFloat(_("c").value).toFixed(4))+' = ' +'CosA<br/>';
+                    _("solution").innerHTML += '                      '+ ((tt + Math.pow(parseFloat(_("a").value).toFixed(4),2))/(-1*(2 * parseFloat(_("b").value).toFixed(4) *  parseFloat(_("c").value).toFixed(4)))).toFixed(4) + ' = ' +'CosA<br/>';
+                    var s = ((tt + Math.pow(parseFloat(_("a").value).toFixed(4),2))/(-1*(2 * parseFloat(_("b").value).toFixed(4) *  parseFloat(_("c").value).toFixed(4))));
+                    _("solution").innerHTML += '                      A = Cos<sup>-1</sup> (' + s.toFixed(4) + ')<br/>';
+                    _("solution").innerHTML += '                      A = ' + (Math.acos(s)*((180/Math.PI))).toFixed(4) + '<br/>';
+                    _("aa").value = (Math.acos(s)*((180/Math.PI))).toFixed(2);
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinA/a = SinB/b<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("aa").value) +'/'+ parseFloat(_("a").value) +' = SinB/'+ parseFloat(_("b").value)+ '<br/>';
+                    var s1 = Math.sin(parseFloat(_("aa").value)*((180/Math.PI))).toFixed(4);
+                    _("solution").innerHTML += '                      '+ s1 +'/'+ parseFloat(_("a").value).toFixed(4) +' = SinB/'+ parseFloat(_("b").value).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      '+ (s1/parseFloat(_("a").value)).toFixed(4)  +' = SinB/'+ parseFloat(_("b").value).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      '+ ((s1/parseFloat(_("a").value))*parseFloat(_("b").value)).toFixed(4)  +' = SinB<br/>';
+                    _("solution").innerHTML += '                      B = Sin<sup>-1</sup> ('+ ((s1/parseFloat(_("a").value))*parseFloat(_("b").value)).toFixed(4) +')<br/>';
+                    var uu = ((s1/parseFloat(_("a").value))*parseFloat(_("b").value)).toFixed(4);
+                    _("solution").innerHTML += '                      B = ' + (Math.asin(uu)*((180/Math.PI))).toFixed(4) + '<br/>';
+                    _("bb").value = (Math.asin(uu)*((180/Math.PI))).toFixed(2);
+                    _("solution").innerHTML += '    To find C,<br/>';
+                    _("solution").innerHTML += '                      C = 180 - ('+ parseFloat(_("aa").value) + ' + ' + parseFloat(_("bb").value) + ') -- Sum of Angles in a Triangle<br/>';
+                    _("solution").innerHTML += '                      C = 180 - ('+ (parseFloat(_("aa").value) + parseFloat(_("bb").value)) + ')<br/>';
+                    _("solution").innerHTML += '                      C = ' + (180 - (parseFloat(_("aa").value) + parseFloat(_("bb").value))).toFixed(4) + '<br/><br/>';
+                    _("cc").value = (180 - (parseFloat(_("aa").value) + parseFloat(_("bb").value))).toFixed(2);
+                    _("solution").innerHTML += '              Therefore, A = ' + _("aa").value + '<sup>0</sup>, B = '+ _("bb").value + '<sup>0</sup> and C = ' + _("cc").value + '<sup>0</sup>';
+                    return;
+                }
+            }
+        }
+        if (_("aa").value != ''){
+            if (_("a").value != '') {
+                if (_("bb").value != '') {
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinA/a = SinB/b<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("aa").value) +'/'+ parseFloat(_("a").value) +' = Sin'+ parseFloat(_("bb").value) + '/b<br/>';
+                    var s1 = parseFloat(_("aa").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("bb").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("a").value) +' = '+ sb + '/b<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +' = '+ sb + '/b<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +'b = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      b = ' + sb + ' / ' + (sa/parseFloat(_("a").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      b = ' + (sb/(sa/parseFloat(_("a").value))).toFixed(4) + '<br/><br/>';
+                    _("b").value = (sb/(sa/parseFloat(_("a").value))).toFixed(2);
+                    _("solution").innerHTML += '    To find C,<br/>';
+                    _("solution").innerHTML += '                      C = 180 - ('+ parseFloat(_("aa").value) + ' + ' + parseFloat(_("bb").value) + ') -- Sum of Angles in a Triangle<br/>';
+                    _("solution").innerHTML += '                      C = 180 - ('+ (parseFloat(_("aa").value) + parseFloat(_("bb").value)) + ')<br/>';
+                    _("solution").innerHTML += '                      C = ' + (180 - (parseFloat(_("aa").value) + parseFloat(_("bb").value))).toFixed(4) + '<br/><br/>';
+                    _("cc").value = (180 - (parseFloat(_("aa").value) + parseFloat(_("bb").value))).toFixed(2);
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinA/a = SinC/c<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("aa").value) +'/'+ parseFloat(_("a").value) +' = Sin'+ parseFloat(_("cc").value) + '/c<br/>';
+                    var s1 = parseFloat(_("aa").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("cc").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("a").value) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +'c = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      c = ' + sb + ' / ' + (sa/parseFloat(_("a").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      c = ' + (sb/(sa/parseFloat(_("a").value))).toFixed(4) + '<br/>';
+                    _("c").value = (sb/(sa/parseFloat(_("a").value))).toFixed(2);
+                    _("solution").innerHTML += '              Therefore, B = ' + _("bb").value + '<sup>0</sup>, b = '+ _("b").value + ' and c = ' + _("c").value;
+                    return;
+                }
+            }
+        }
+        if (_("aa").value != ''){
+            if (_("a").value != '') {
+                if (_("cc").value != '') {
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinA/a = SinC/c<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("aa").value) +'/'+ parseFloat(_("a").value) +' = Sin'+ parseFloat(_("cc").value) + '/c<br/>';
+                    var s1 = parseFloat(_("aa").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("cc").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("a").value) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +'c = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      c = ' + sb + ' / ' + (sa/parseFloat(_("a").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      c = ' + (sb/(sa/parseFloat(_("a").value))).toFixed(4) + '<br/><br/>';
+                    _("c").value = (sb/(sa/parseFloat(_("a").value))).toFixed(2);
+                    _("solution").innerHTML += '    To find B,<br/>';
+                    _("solution").innerHTML += '                      B = 180 - ('+ parseFloat(_("aa").value) + ' + ' + parseFloat(_("cc").value) + ') -- Sum of Angles in a Triangle<br/>';
+                    _("solution").innerHTML += '                      B = 180 - ('+ (parseFloat(_("aa").value) + parseFloat(_("cc").value)) + ')<br/>';
+                    _("solution").innerHTML += '                      B = ' + (180 - (parseFloat(_("aa").value) + parseFloat(_("cc").value))).toFixed(4) + '<br/><br/>';
+                    _("bb").value = (180 - (parseFloat(_("aa").value) + parseFloat(_("cc").value))).toFixed(2);
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinA/a = SinB/b<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("aa").value) +'/'+ parseFloat(_("a").value) +' = Sin'+ parseFloat(_("bb").value) + '/b<br/>';
+                    var s1 = parseFloat(_("aa").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("bb").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("a").value) +' = '+ sb + '/b<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +' = '+ sb + '/b<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +'b = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      b = ' + sb + ' / ' + (sa/parseFloat(_("a").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      b = ' + (sb/(sa/parseFloat(_("a").value))).toFixed(4) + '<br/>';
+                    _("b").value = (sb/(sa/parseFloat(_("a").value))).toFixed(2);
+                    _("solution").innerHTML += '              Therefore, B = ' + _("bb").value + ', b = '+ _("b").value + ' and c = ' + _("c").value;
+                    return;
+                }
+            }
+        }
+        if (_("bb").value != ''){
+            if (_("b").value != '') {
+                if (_("aa").value != '') {
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinB/b = SinA/a<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("bb").value) +'/'+ parseFloat(_("b").value) +' = Sin'+ parseFloat(_("aa").value) + '/a<br/>';
+                    var s1 = parseFloat(_("bb").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("aa").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("b").value) +' = '+ sb + '/a<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("b").value)).toFixed(4) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("b").value)).toFixed(4) +'a = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      a = ' + sb + ' / ' + (sa/parseFloat(_("b").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      a = ' + (sb/(sa/parseFloat(_("b").value))).toFixed(4) + '<br/><br/>';
+                    _("a").value = (sb/(sa/parseFloat(_("b").value))).toFixed(2);
+                    _("solution").innerHTML += '    To find C,<br/>';
+                    _("solution").innerHTML += '                      C = 180 - ('+ parseFloat(_("aa").value) + ' + ' + parseFloat(_("bb").value) + ') -- Sum of Angles in a Triangle<br/>';
+                    _("solution").innerHTML += '                      C = 180 - ('+ (parseFloat(_("aa").value) + parseFloat(_("bb").value)) + ')<br/>';
+                    _("solution").innerHTML += '                      C = ' + (180 - (parseFloat(_("aa").value) + parseFloat(_("bb").value))).toFixed(4) + '<br/><br/>';
+                    _("cc").value = (180 - (parseFloat(_("aa").value) + parseFloat(_("bb").value))).toFixed(2);
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinA/a = SinC/c<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("aa").value) +'/'+ parseFloat(_("a").value) +' = Sin'+ parseFloat(_("cc").value) + '/c<br/>';
+                    var s1 = parseFloat(_("aa").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("cc").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("a").value) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +'c = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      c = ' + sb + ' / ' + (sa/parseFloat(_("a").value)).toFixed(4) + '<br/>';
+
+                    _("solution").innerHTML += '                      c = ' + (sb/(sa/parseFloat(_("a").value))).toFixed(4) + '<br/>';
+                    _("c").value = (sb/(sa/parseFloat(_("a").value))).toFixed(2);
+                    _("solution").innerHTML += '              Therefore, C = ' + _("cc").value + '<sup>0</sup>, c = '+ _("c").value + ' and a = ' + _("a").value;
+                    return;
+                }
+            }
+        }
+        if (_("cc").value != ''){
+            if (_("c").value != '') {
+                if (_("bb").value != '') {
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinC/c = SinB/b<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("cc").value) +'/'+ parseFloat(_("c").value) +' = Sin'+ parseFloat(_("bb").value) + '/b<br/>';
+                    var s1 = parseFloat(_("cc").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("bb").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("c").value) +' = '+ sb + '/b<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("c").value)).toFixed(4) +' = '+ sb + '/b<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("c").value)).toFixed(4) +'a = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      b = ' + sb + ' / ' + (sa/parseFloat(_("c").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      b = ' + (sb/(sa/parseFloat(_("c").value))).toFixed(4) + '<br/><br/>';
+                    _("b").value = (sb/(sa/parseFloat(_("c").value))).toFixed(2);
+                    _("solution").innerHTML += '    To find A,<br/>';
+                    _("solution").innerHTML += '                      A = 180 - ('+ parseFloat(_("bb").value) + ' + ' + parseFloat(_("cc").value) + ') -- Sum of Angles in a Triangle<br/>';
+                    _("solution").innerHTML += '                      A = 180 - ('+ (parseFloat(_("bb").value) + parseFloat(_("cc").value)) + ')<br/>';
+                    _("solution").innerHTML += '                      A = ' + (180 - (parseFloat(_("bb").value) + parseFloat(_("cc").value))).toFixed(4) + '<br/><br/>';
+                    _("aa").value = (180 - (parseFloat(_("bb").value) + parseFloat(_("cc").value))).toFixed(2);
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinB/b = SinA/a<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("bb").value) +'/'+ parseFloat(_("b").value) +' = Sin'+ parseFloat(_("aa").value) + '/a<br/>';
+                    var s1 = parseFloat(_("bb").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("aa").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("b").value) +' = '+ sb + '/a<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("b").value)).toFixed(4) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("b").value)).toFixed(4) +'a = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      a = ' + sb + ' / ' + (sa/parseFloat(_("b").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      a = ' + (sb/(sa/parseFloat(_("b").value))).toFixed(4) + '<br/><br/>';
+                    _("a").value = (sb/(sa/parseFloat(_("b").value))).toFixed(2);
+                    _("solution").innerHTML += '              Therefore, A = ' + _("aa").value + '<sup>0</sup>, a = '+ _("a").value + ' and b = ' + _("b").value;
+                    return;
+                }
+            }
+        }
+        if (_("cc").value != ''){
+            if (_("c").value != '') {
+                if (_("aa").value != '') {
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinC/c = SinA/a<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("cc").value) +'/'+ parseFloat(_("c").value) +' = Sin'+ parseFloat(_("aa").value) + '/a<br/>';
+                    var s1 = parseFloat(_("cc").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("aa").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("c").value) +' = '+ sb + '/a<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("c").value)).toFixed(4) +' = '+ sb + '/a<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("c").value)).toFixed(4) +'a = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      a = ' + sb + ' / ' + (sa/parseFloat(_("c").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      a = ' + (sb/(sa/parseFloat(_("c").value))).toFixed(4) + '<br/><br/>';
+                    _("a").value = (sb/(sa/parseFloat(_("c").value))).toFixed(2);
+                    _("solution").innerHTML += '    To find B,<br/>';
+                    _("solution").innerHTML += '                      B = 180 - ('+ parseFloat(_("aa").value) + ' + ' + parseFloat(_("cc").value) + ') -- Sum of Angles in a Triangle<br/>';
+                    _("solution").innerHTML += '                      B = 180 - ('+ (parseFloat(_("aa").value) + parseFloat(_("cc").value)) + ')<br/>';
+                    _("solution").innerHTML += '                      B = ' + (180 - (parseFloat(_("aa").value) + parseFloat(_("cc").value))).toFixed(4) + '<br/><br/>';
+                    _("bb").value = (180 - (parseFloat(_("aa").value) + parseFloat(_("cc").value))).toFixed(2);
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinA/a = SinB/b<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("aa").value) +'/'+ parseFloat(_("a").value) +' = Sin'+ parseFloat(_("bb").value) + '/b<br/>';
+                    var s1 = parseFloat(_("aa").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("bb").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("a").value) +' = '+ sb + '/b<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +' = '+ sb + '/b<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("a").value)).toFixed(4) +'b = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      b = ' + sb + ' / ' + (sa/parseFloat(_("a").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      b = ' + (sb/(sa/parseFloat(_("a").value))).toFixed(4) + '<br/><br/>';
+                    _("b").value = (sb/(sa/parseFloat(_("a").value))).toFixed(2);
+                    _("solution").innerHTML += '              Therefore, B = ' + _("bb").value + '<sup>0</sup>, b = '+ _("b").value + ' and a = ' + _("a").value;
+                    return;
+                }
+            }
+        }
+        if (_("bb").value != ''){
+            if (_("b").value != '') {
+                if (_("cc").value != '') {
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinB/b = SinC/c<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("bb").value) +'/'+ parseFloat(_("b").value) +' = Sin'+ parseFloat(_("cc").value) + '/c<br/>';
+                    var s1 = parseFloat(_("bb").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("cc").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("b").value) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("b").value)).toFixed(4) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("b").value)).toFixed(4) +'a = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      c = ' + sb + ' / ' + (sa/parseFloat(_("b").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      c = ' + (sb/(sa/parseFloat(_("b").value))).toFixed(4) + '<br/><br/>';
+                    _("c").value = (sb/(sa/parseFloat(_("b").value))).toFixed(2);
+                    _("solution").innerHTML += '    To find A,<br/>';
+                    _("solution").innerHTML += '                      A = 180 - ('+ parseFloat(_("bb").value) + ' + ' + parseFloat(_("cc").value) + ') -- Sum of Angles in a Triangle<br/>';
+                    _("solution").innerHTML += '                      A = 180 - ('+ (parseFloat(_("bb").value) + parseFloat(_("cc").value)) + ')<br/>';
+                    _("solution").innerHTML += '                      A = ' + (180 - (parseFloat(_("bb").value) + parseFloat(_("cc").value))).toFixed(4) + '<br/><br/>';
+                    _("aa").value = (180 - (parseFloat(_("bb").value) + parseFloat(_("cc").value))).toFixed(2);
+                    _("solution").innerHTML += '    Using Sine Rule,<br/>';
+                    _("solution").innerHTML += '                      SinB/b = SinA/a<br/>';
+                    _("solution").innerHTML += '                      Sin'+ parseFloat(_("bb").value) +'/'+ parseFloat(_("b").value) +' = Sin'+ parseFloat(_("aa").value) + '/a<br/>';
+                    var s1 = parseFloat(_("bb").value) / (180/Math.PI);
+                    var s2 = parseFloat(_("aa").value) / (180/Math.PI);
+                    var sa = (Math.sin(s1)).toFixed(4);
+                    var sb = (Math.sin(s2)).toFixed(4);
+                    _("solution").innerHTML += '                      '+ sa +'/'+ parseFloat(_("b").value) +' = '+ sb + '/a<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("b").value)).toFixed(4) +' = '+ sb + '/c<br/>';
+                    _("solution").innerHTML += '                      '+ (sa/parseFloat(_("b").value)).toFixed(4) +'a = '+ sb + '<br/>';
+                    _("solution").innerHTML += '                      a = ' + sb + ' / ' + (sa/parseFloat(_("b").value)).toFixed(4) + '<br/>';
+                    _("solution").innerHTML += '                      a = ' + (sb/(sa/parseFloat(_("b").value))).toFixed(4) + '<br/><br/>';
+                    _("a").value = (sb/(sa/parseFloat(_("b").value))).toFixed(2);
+                    _("solution").innerHTML += '              Therefore, A = ' + _("aa").value + '<sup>0</sup>, c = '+ _("c").value + ' and a = ' + _("a").value;
+                    return;
+                }
+            }
+        }
+        document.body.scrollTop = document.body.scrollHeight;
+    }
+</script>
+
+<body>
+<center>
+    <div class="panel">
+        <b>A: </b>
+        <br/>
+        <br/>
+        <input type="number" id="aa" placeholder="A">
+    </div>
+    <div class="panel">
+        <b>a: </b>
+        <br/>
+        <br/>
+        <input type="number" id="a" placeholder="a">
+    </div>
+    <div class="panel">
+        <b>B: </b>
+        <br/>
+        <br/>
+        <input type="number" id="bb" placeholder="B">
+    </div>
+    <div class="panel">
+        <b>b: </b>
+        <br/>
+        <br/>
+        <input type="number" id="b" placeholder="b">
+    </div>
+    <div class="panel">
+        <b>C: </b>
+        <br/>
+        <br/>
+        <input type="number" id="cc" placeholder="C">
+    </div>
+    <div class="panel">
+        <b>c: </b>
+        <br/>
+        <br/>
+        <input type="number" id="c" placeholder="c">
+    </div>
+</center>
+<br/>
+<br/>
+    <center><button class="solve" onclick="solve()" class="solve">Solve</button></center>
+    <br/>
+    <center>
+        <div id="solution"></div>
+    </center>
+    <br/>
+    <br/>
+</body>
+
+</html>

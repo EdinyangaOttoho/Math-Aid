@@ -1,0 +1,215 @@
+<html>
+<head>
+	<script src="all.js"></script>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="motif.png">
+    <link rel="stylesheet" href="all.css">
+	<meta name="viewport" content="user-scalable=0,initial-scale=0.8,width=device-width">
+	<title>Number Bases</title>
+	<style>
+		body {
+            font-family:candara;
+            background-image: url('back.png');
+            background-size:10% 10%;
+		}
+		.other {
+			border-radius:50%;
+	        background-color: cornflowerblue;
+	        border: 0px;
+	        width:40px;
+	        height:40px;
+	        font-size: 16px;
+	        color:white;
+		}
+		a {
+			color:white;
+			cursor:hand;
+		}
+		.solve {
+	        position: relative;
+	        top: 10px;
+	        cursor: hand;
+	        background-color: cornflowerblue;
+	        border: 0px;
+	        font-size: 16px;
+	        border-radius: 4px;
+	        padding: 3px;
+	        color: white;
+	        text-shadow: gray 1px 1px 1px;
+	        transition: 0.5s;
+	        border: 2px solid cornflowerblue;
+	    }
+	    input {
+	        font-family: cambria math;
+	        border:1px solid black;
+	        font-size: 20px;
+	        font-style: italic;
+	        text-indent:all;
+	        border-radius: 3px;
+	        outline: none;
+	        padding: 5px;
+	        width: 300px;
+	        height:30px;
+	        border: 1px solid lightgray;
+	        cursor: hand;
+	        text-shadow: gray 1px 1px 1px;
+	        transition: 0.5s
+	    }
+	    input:focus {
+	        box-shadow:inset 0px 0px 3px 2px lightgray;
+	    }
+	    select {
+	        font-family: cambria math;
+	        font-size: 20px;
+	        font-style: italic;
+	        text-indent:all;
+	        border-radius: 3px;
+	        outline: none;
+	        padding: 5px;
+	        width: 100px;
+	        height:40px;
+	        border: 1px solid lightgray;
+	        cursor: hand;
+	        text-shadow: gray 1px 1px 1px;
+	        transition: 0.5s	
+	    }
+	    #solution {
+	    	color:white;
+	    	font-size:18px;
+	    }
+	    .solve:hover {
+	        opacity: 0;
+	        opacity: 1;
+	        background-color: powderblue;
+	        color: black;
+	        border: 2px solid black;
+	    }
+	     @media(max-width:800px) {
+        #solution {
+        font-size:14px;
+    }
+	</style>
+	<script>
+		function change() {
+            document.getElementById("num").innerText = document.getElementById("number").value;
+            document.getElementById("bas").innerText = document.getElementById("base").value;
+		}
+		function solve() {
+			var n = parseInt(document.getElementById("number").value);
+			var b = parseInt(document.getElementById("base").value);
+			if (b != '16') {
+				document.getElementById("solution").innerHTML = '<table cellspacing="0" cellpadding="0" style="width:100%;overflow:auto;border:0.5px solid white;box-sizing:border-box" id="solution"><tr><td style="background-color:cornflowerblue;height:40px;color:white;;border:0.5px solid white;width:150px;font-weight:bold;padding:5px" id="num">'+ b +'</td><td style="background-color:cornflowerblue;height:40px;color:white;;border:0.5px solid white;width:150px;font-weight:bold;padding:5px" id="bas">'+ n +'</td><td style="background-color:cornflowerblue;height:40px;color:white;;border:0.5px solid white;font-weight:bold;padding:5px">REM</td></tr></table>';
+				var ar = new Array();
+	            var i = setInterval(function(){
+	               if (n >= 1) {
+	               	  var s = Math.floor(n/b);
+	                  var t = n % b;
+	                  n = s;
+	                  ar.push(t);
+	                  document.getElementById("solution").innerHTML += '<tr><td style="border:0.5px solid white;padding:10px">'+ b +'</td><td style="border:0.5px solid white;padding:10px">'+ s +'</td><td style="border:0.5px solid white;padding:10px">'+ t +'</td></tr>';
+	               }
+	               else {
+	               	  var a = new Array();
+	               	  a = ar.reverse();
+	               	  var str = '';
+	               	  for (var x = 0;x < a.length;x++) {
+	                      str += a[x];
+	               	  }
+	               	  document.getElementById("result").innerHTML = str;
+	               	  clearInterval(i);
+	               }
+	            },100);
+			}
+			else {
+			    document.getElementById("solution").innerHTML = '<table cellspacing="0" cellpadding="0" style="width:100%;overflow:auto;border:0.5px solid white;box-sizing:border-box" id="solution"><tr><td style="background-color:cornflowerblue;height:40px;color:white;;border:0.5px solid white;width:150px;font-weight:bold;padding:5px" id="num">'+ b +'</td><td style="background-color:cornflowerblue;height:40px;color:white;;border:0.5px solid white;width:150px;font-weight:bold;padding:5px" id="bas">'+ n +'</td><td style="background-color:cornflowerblue;height:40px;color:white;;border:0.5px solid white;font-weight:bold;padding:5px">REM</td></tr></table>';
+				var ar = new Array();
+	            var i = setInterval(function(){
+	               if (n >= 1) {
+	               	  var s = Math.floor(n/b);
+	                  var t = n % b;
+	                  n = s;
+	                  ar.push(t);
+	                  document.getElementById("solution").innerHTML += '<tr><td style="color:white;border:0.5px solid white;padding:10px">'+ b +'</td><td style="color:white;border:0.5px solid white;padding:10px">'+ s +'</td><td style="border:0.5px solid white;padding:10px;color:white">'+ t +'</td></tr>';
+	               }
+	               else {
+	               	  var a = new Array();
+	               	  a = ar.reverse();
+	               	  var str = '';
+	               	  for (var x = 0;x < a.length;x++) {
+	               	  	  if (a[x] == 10){
+                              str += 'A';
+	               	  	  }
+	                      else if (a[x] == 11){
+                              str += 'B';
+	               	  	  }
+	               	  	  else if (a[x] == 12){
+                              str += 'C';
+	               	  	  }
+	               	  	  else if (a[x] == 13){
+                              str += 'D';
+	               	  	  }
+	               	  	  else if (a[x] == 14){
+                              str += 'E';
+	               	  	  }
+	               	  	  else if (a[x] == 15){
+                              str += 'F';
+	               	  	  }
+	               	  	  else {
+	               	  	  	  str += a[x];
+	               	  	  }
+	               	  }
+	               	  document.getElementById("result").innerHTML = str;
+	               	  clearInterval(i);
+	               }
+	            },100);	
+			}
+		}
+	</script>
+</head>
+<body>
+<br/>
+<a href="Number Bases 2.html"><button class="other"><i class="fas fa-share"></i></button></a>
+<br/>
+<br/>
+<b>Convert</b>
+<br/>
+<b><input type="number" id="number" oninput="change()"> <sub>10</sub></b>
+<br/>
+<br/>
+<b>To Base:</b>
+<br/>
+<br/>
+<select id="base" oninput="change()">
+	<option>2</option>
+	<option>3</option>
+	<option>4</option>
+	<option>5</option>
+	<option>6</option>
+	<option>7</option>
+	<option>8</option>
+	<option>9</option>
+	<option>16</option>
+</select>
+<br/>
+<br/>
+<b>RESULT:</b>
+<br/>
+<br/>
+<button id="result" style="outline:none;text-align:left;font-size:20px;font-weight:bold;padding:5px;background-color:black;border:0px;width:300px;height:35px;color:white"></button>
+<br/>
+<br/>
+<button class="solve" onclick="solve()">Solve</button>
+<br/>
+<br/>
+<br/>
+<div style="overflow:auto;height:60vh;width:100%;background-color:black">
+	<table cellspacing="0" cellpadding="0" style="width:100%;background-color:black;border:0.5px solid white;box-sizing:border-box" id="solution">
+		<tr>
+			<td style="background-color:cornflowerblue;height:40px;color:white;;border:0.5px solid white;width:150px;font-weight:bold;padding:5px" id="num">0</td>
+			<td style="background-color:cornflowerblue;height:40px;color:white;;border:0.5px solid white;width:150px;font-weight:bold;padding:5px" id="bas">0</td>
+			<td style="background-color:cornflowerblue;height:40px;color:white;;border:0.5px solid white;font-weight:bold;padding:5px">REM</td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>
